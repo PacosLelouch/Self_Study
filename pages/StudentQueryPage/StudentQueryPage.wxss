@@ -1,0 +1,101 @@
+/* pages/StudentQueryPage/StudentQueryPage.wxss */
+picker{
+  text-align: center;
+}
+.select{
+  border: 1px solid blue;
+  border-radius: 5px;
+}
+.title{ /*标题*/
+  text-align: center;
+  font-size: 1.4em;
+  font-style: italic;
+}
+.container{
+  margin: 20px;
+  padding: 0px;
+  height: 480px;
+}
+.input-texts{
+  background-color: aquamarine;
+  width: 90%;
+  height: 6%;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+}
+.orders-outer{
+  width: 90%;
+  height: 74%;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: aliceblue;
+}
+.orders-title{
+  text-align: center; 
+}
+.orders{
+  height: 80%;
+  border-radius: 10px;
+  /*border: 1px solid blue;*/
+  margin: 10px 0px 10px 0px;
+  background: #E6F3F9;
+}
+.index{
+  position: absolute;
+  text-align: left;
+  top: -10px;
+  left: -10px;
+  padding: 15px 5px 5px 15px;
+  width: 3rem;
+  border-radius: 10px;
+  font-size: 16px;
+  background: aqua;
+  color: gray;
+}
+.one-order{
+  position: relative;
+  margin: 20px;
+  padding: 10px;
+  padding-top: 30px;
+  border-radius: 10px;
+  border: 1px solid aqua;
+  text-align: center; 
+  background: aliceblue;
+  overflow: hidden;
+}
+.one-order-hover{
+  background: #f7ffff;
+}
+.hint{ /*提示信息*/
+  color:gray;
+}
+.table {
+  border: 0px solid darkgray;
+}
+
+.td, .td-first, .th, .th-first {
+  border: 1px solid darkgray;
+}
+.tr {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  height: 3rem;
+  align-items: center;
+}
+.td {
+    width:40%;
+    justify-content: center;
+    text-align: center;
+}
+.th {
+  width: 40%;
+  justify-content: center;
+  background: #3366FF;
+  color: #fff;
+  display: flex;
+  height: 3rem;
+  align-items: center;
+}

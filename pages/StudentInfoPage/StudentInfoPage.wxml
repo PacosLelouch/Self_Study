@@ -1,0 +1,29 @@
+<!--pages/StudentInfoPage/StudentInfoPage.wxml-->
+<view class="title">
+  <text>个人信息</text>
+</view>
+<view class="container" style="height:{{wHeight - 100}}px;">
+  <view class="personal">
+    <text>个人资料\n</text>
+    <text>学号：{{id}}\n</text>
+    <text>是否在黑名单：{{inBlackList}}\n</text>
+  </view>
+  <view class="orders-outer" style="height:{{wHeight - 250}}px;">
+    <view style="heihgt: 50px;">
+      <text>预约记录\n</text>
+      <text class="hint">点击记录取消预约</text>
+    </view>
+    <scroll-view class="orders" scroll-y="true" style="height:{{wHeight - 300}}px;">
+      <view wx:for="{{orders}}" wx:key="index" class="one-order" hover-class="one-order-hover" id="{{index}}" bindtap="cancelOrderRecord">
+        <view class="index">{{index + 1}}</view>
+        <text>预约号：{{item.orderId}}\n</text>
+        <!--text>{{item.id}}\n</text-->
+        <text>日期：{{item.date}}\n</text>
+        <text>开始时间：{{item.startTime}}\n</text>
+        <text>结束时间：{{item.endTime}}\n</text>
+        <text>状态：{{item.state}}\n</text>
+        <text>是否使用插座：{{item.usePlug}}\n</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>

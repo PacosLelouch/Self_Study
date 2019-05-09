@@ -1,0 +1,27 @@
+<!--pages/WelcomePage/WelcomePage.wxml-->
+<view class="title">
+  <text>{{title}}</text>
+</view>
+<!--view class="testStorage" style="text-align:center;">
+  <text wx:if="{{logined}}">{{logined}} </text>
+  <text wx:if="{{type}}">{{type}} </text>
+  <text wx:if="{{id}}">{{id}} </text>
+</view--> 
+<view class="buttons" wx:if="{{!logined}}">
+  <button class="btn" hover-class="btn-hover" bindtap="registerPage">{{register.text}}</button>
+  <button class="btn" hover-class="btn-hover" bindtap="loginPage">{{login.text}}</button>
+</view>
+<view class="buttons" wx:if="{{logined && type == 0}}">
+  <button class="btn" hover-class="btn-hover" bindtap="studentInfoPage">{{studentInfo.text}}</button>
+  <button class="btn" hover-class="btn-hover" bindtap="studentQueryPage">{{studentQuery.text}}</button>
+  <button class="btn" hover-class="btn-hover" bindtap="checkInPage">{{checkIn.text}}</button>
+  <button class="btn" hover-class="btn-hover" bindtap="checkOutPage">{{checkOut.text}}</button>
+</view>
+<view class="buttons" wx:if="{{logined && type == 1}}">
+  <button class="btn" hover-class="btn-hover" bindtap="adminQueryPage">{{adminQuery.text}}</button>
+  <button class="btn" hover-class="btn-hover" bindtap="blackListPage">{{blackList.text}}</button>
+  <!--admin-->
+</view>
+<view class="buttons" wx:if="{{logined}}">
+  <button class="btn" hover-class="btn-hover" bindtap="logout">{{logout.text}}</button>
+</view>

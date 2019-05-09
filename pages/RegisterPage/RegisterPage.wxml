@@ -1,0 +1,19 @@
+<!--pages/RegisterPage/RegisterPage.wxml-->
+<view class="title">
+  <text>注册</text>
+</view>
+<view class="input-texts">
+  <view class="hint">{{inputId.text}}</view>
+  <view class="errMsg" wx:if="{{!idValidity}}">{{inputId.notValidMsg}}</view>
+  <view class="errMsg" wx:if="{{!idNew}}">{{inputId.notNewMsg}}</view>
+  <input type="text" bindinput="inputId"></input>
+  <view class="hint">{{inputPassword.text}}</view>
+  <view class="errMsg" wx:if="{{!passwordValidity}}">{{inputPassword.notValidMsg}}</view>
+  <input type="password" bindinput="inputPassword"></input>
+  <view class="hint">{{inputConfirmPassword.text}}</view>
+  <view class="errMsg" wx:if="{{!passwordConsistency}}">{{inputConfirmPassword.notConsistentMsg}}</view>
+  <input type="password" bindinput="inputConfirmPassword"></input>
+</view>
+<view class="buttons">
+  <button class="btn" hover-class="btn-hover" bindtap="register">{{register.text}}</button>
+</view>

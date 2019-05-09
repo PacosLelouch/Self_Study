@@ -1,0 +1,22 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/WelcomePage/WelcomePage",
+    "pages/RegisterPage/RegisterPage",
+    "pages/UsernameLoginPage/UsernameLoginPage",
+    "pages/StudentInfoPage/StudentInfoPage",
+    "pages/StudentQueryPage/StudentQueryPage",
+    "pages/CheckInPage/CheckInPage",
+    "pages/CheckOutPage/CheckOutPage",
+    "pages/AdminQueryPage/AdminQueryPage",
+    "pages/BlackListPage/BlackListPage"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json"
+}

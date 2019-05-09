@@ -1,0 +1,70 @@
+/* pages/UsernameLoginPage/UsernameLoginPage.wxss */
+picker{
+  text-align: center;
+}
+.select{
+  border: 1px solid blue;
+  border-radius: 5px;
+}
+.title{ /*标题*/
+  text-align: center;
+  font-size: 1.4em;
+  font-style: italic;
+}
+.input-texts{
+  vertical-align: center;
+  margin: 20px 20px 20px 20px;
+}
+.input-texts input{ /*文本输入*/
+  margin: 20px 20px 20px 20px;
+  border: 1px solid;
+  border-top: 2px solid;
+  border-radius: 5px;
+}
+.hint{ /*提示信息*/
+  color:gray;
+  text-indent: 20px;
+}
+.errMsg{ /*失败信息*/
+  color: red;
+  text-indent: 20px;
+}
+.buttons{ /*btn区域*/
+  vertical-align: center;
+  margin: 20px 20px 20px 20px;
+}
+.btn{ /*btn*/
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  height: 40px;
+  width: 200px;
+}
+.btn{ /*btn未触碰*/
+  border-radius: 5px;
+  border-top: 0px solid;
+  border-bottom: 2px solid;
+  border-left: 0px solid;
+  border-right: 0px solid;
+  border-color: rgb(100, 200, 150);
+  background: -moz-linear-gradient(top, rgba(52, 248, 148, 255), rgba(195, 251, 229, 200));
+  background: -webkit-gradient(linear, bottom, from(rgba(52, 248, 148, 255)), to(rgba(195, 251, 229, 200)));
+  background: -webkit-linear-gradient(bottom, rgba(52, 248, 148, 255), rgba(195, 251, 229, 200));
+  background: -o-linear-gradient(top, rgba(52, 248, 148, 255), rgba(195, 251, 229, 200));
+  background: linear-gradient(to top, rgba(52, 248, 148, 255), rgba(195, 251, 229, 200));
+}
+.btn-hover{ /*btn触碰后*/
+  border-radius: 5px;
+  border-top: 2px solid;
+  border-bottom: 0px solid;
+  border-left: 0px solid;
+  border-right: 0px solid;
+  border-color: rgb(100, 200, 150);
+  background: -moz-linear-gradient(top, rgba(13, 204, 88, 255), rgba(153, 224, 198, 200));
+  background: -webkit-gradient(linear, bottom, from(rgba(13, 204, 88, 255)), to(rgba(153, 224, 198, 200)));
+  background: -webkit-linear-gradient(bottom, rgba(13, 204, 88, 255), rgba(153, 224, 198, 200));
+  background: -o-linear-gradient(top, rgba(13, 204, 88, 255), rgba(153, 224, 198, 200));
+  background: linear-gradient(to top, rgba(13, 204, 88, 255), rgba(153, 224, 198, 200));
+}
