@@ -1,6 +1,7 @@
 // debugFunc.js
 // for debugging without server.
-const isDebug = true;
+//const isDebug = true;
+const isDebug = false;
 
 const stateList = [
   '待使用',

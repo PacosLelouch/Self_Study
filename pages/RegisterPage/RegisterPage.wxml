@@ -6,7 +6,7 @@
   <view class="hint">{{inputId.text}}</view>
   <view class="errMsg" wx:if="{{idNotValid}}">{{inputId.notValidMsg}}</view>
   <view class="errMsg" wx:if="{{idStatus == 1}}">{{inputId.notNewMsg}}</view>
-  <view class="errMsg" wx:if="{{idStatus == 2}}">{{inputId.notSucceedMsg}}</view>
+  <view class="errMsg" wx:if="{{idStatus == -1}}">{{inputId.notSucceedMsg}}</view>
   <input type="text" bindinput="inputId"></input>
   <view class="hint">{{inputPassword.text}}</view>
   <view class="errMsg" wx:if="{{passwordNotValid}}">{{inputPassword.notValidMsg}}</view>

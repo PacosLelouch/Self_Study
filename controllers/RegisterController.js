@@ -24,12 +24,12 @@ const createStudent = (page, id, password, confirmPassword) => {
     });
   }
   else{
-    var idNew;
+    var idStatus;
     wx.request({
-      url: serverUrl.registerUrl,
+      url: serverUrl.register.url,
       data: { id: id, password: password, },
       header: { 'content-type': 'application/json', },
-      method: 'POST',
+      method: serverUrl.register.method,
       dataType: 'json',
       responseType: 'text',
       success: function (res) {
@@ -41,7 +41,7 @@ const createStudent = (page, id, password, confirmPassword) => {
           idStatus = 1;
         }
         else{
-          idStatus = 2;
+          idStatus = -1;
         }
         page.displayResult({
           idNotValid: !idValid,
@@ -50,7 +50,14 @@ const createStudent = (page, id, password, confirmPassword) => {
           passwordNotConsistent: !passwordConsistent,
         });
       },
-      fail: function (res) { },
+      fail: function (res) {
+        page.displayResult({
+          idNotValid: !idValid,
+          idStatus: -1,
+          passwordNotValid: !passwordValid,
+          passwordNotConsistent: !passwordConsistent,
+        });
+      },
       complete: function (res) { },
     });
   }

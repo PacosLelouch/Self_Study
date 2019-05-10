@@ -37,25 +37,25 @@ function studentLogin(page, id, password){
   }
   else{
     wx.request({
-      url: serverUrl.studentLoginUrl,
+      url: serverUrl.studentLogin.url,
       data: { id: id, password: password, },
       header: { 'content-type': 'application/json', },
-      method: 'POST',
+      method: serverUrl.studentLogin.method,
       dataType: 'json',
       responseType: 'text',
       success: function (res) { 
         console.log(res); 
         if(res.statusCode == 200){
-          loginStauts = 0;
+          loginStatus = 0;
         }
         else if(res.statusCode == 404){
           loginStatus = 1;
         }
         else if(res.statusCode == 403){
-          loginStauts = 2;
+          loginStatus = 2;
         }
         else{
-          loginStatus = 3;
+          loginStatus = -1;
         }
         page.showResult({
           idNotValid: false,
@@ -67,7 +67,13 @@ function studentLogin(page, id, password){
           console.log('loginSucceed = ' + loginSucceed.toString());
         }
       },
-      fail: function (res) { },
+      fail: function (res) { 
+        page.showResult({
+          idNotValid: false,
+          passwordNotValid: false,
+          loginStatus: -1,
+        });
+      },
       complete: function (res) { },
     });
   }
@@ -89,25 +95,25 @@ function adminLogin(page, id, password){
   }
   else {
     wx.request({
-      url: serverUrl.adminLoginUrl,
+      url: serverUrl.adminLogin.url,
       data: { id: id, password: password, },
       header: { 'content-type': 'application/json', },
-      method: 'POST',
+      method: serverUrl.adminLogin.method,
       dataType: 'json',
       responseType: 'text',
       success: function (res) {
         console.log(res);
         if (res.statusCode == 200) {
-          loginStauts = 0;
+          loginStatus = 0;
         }
         else if (res.statusCode == 404) {
           loginStatus = 1;
         }
         else if (res.statusCode == 403) {
-          loginStauts = 2;
+          loginStatus = 2;
         }
         else {
-          loginStatus = 3;
+          loginStatus = -1;
         }
         page.showResult({
           idNotValid: false,
@@ -119,7 +125,13 @@ function adminLogin(page, id, password){
           console.log('loginSucceed = ' + loginSucceed.toString());
         }
       },
-      fail: function (res) { },
+      fail: function (res) { 
+        page.showResult({
+          idNotValid: false,
+          passwordNotValid: false,
+          loginStatus: -1,
+        });
+      },
       complete: function (res) { },
     });
   }

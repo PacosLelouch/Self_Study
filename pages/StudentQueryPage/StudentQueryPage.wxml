@@ -48,24 +48,22 @@
 
     <scroll-view class="orders" style="height:{{wHeight-280}}px;" scroll-y="true" scroll-x="true">
       <view class="table">
-        <block>
+        <block style="display: table-header-group;">
           <view class="tr">
-            <view class="th">预约情况</view>
+            <view class="th-first">预约情况</view>
             <view wx:for="{{column}}" wx:key="index" class="th">{{item}}</view>
           </view>
         </block>
-        <block wx:for="{{row}}" wx:key="index" wx:for-item="room">
+        <block style="display: table-row-group;" wx:for="{{row}}" wx:key="index" wx:for-item="room">
           <view class="tr">
-            <view class="td">
+            <view class="td-first">
               <text>{{room.roomName}}\n</text>
               <text>容量：{{room.capacity}}\n</text>
               <text>插座数：{{room.plugCapacity}}\n</text>
             </view>
-            <view class="td" wx:for="{{grid}}" wx:key="index">
-              <view wx:if="{{room.roomName == item.roomName}}">
+            <view class="td" wx:if="{{room.roomName == item.roomName}}" wx:for="{{grid}}" wx:key="index" bindtap="order" hover-class="td-hover" id="{{index}}">
                 <text>已申请：{{item.numberOfOrder}}\n</text>
                 <text>已申插座：{{item.numberOfOrderedPlug}}\n</text>
-              </view>
             </view>
           </view>
         </block>

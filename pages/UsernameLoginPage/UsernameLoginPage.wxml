@@ -19,4 +19,4 @@
 </view>
 <view class="errMsg" wx:if="{{loginStatus == 1}}">{{login.idNotValidMsg}}</view>
 <view class="errMsg" wx:if="{{loginStatus == 2}}">{{login.passwordNotValidMsg}}</view>
-<view class="errMsg" wx:if="{{loginStatus == 3}}">{{login.notSucceedValidMsg}}</view>
+<view class="errMsg" wx:if="{{loginStatus == -1}}">{{login.notSucceedValidMsg}}</view>

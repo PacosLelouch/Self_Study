@@ -115,6 +115,7 @@ Page({
     studentQueryController.queryOrder(this, dateString);
   },
   order: function (e) {
-
+    console.log(e);
+    var index = parseInt(e.currentTarget.id);
   },
 })
