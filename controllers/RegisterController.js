@@ -3,24 +3,24 @@ const debugFunc = require("../utils/debugFunc.js");
 const checkInput = require("../controllers/checkInputController.js");
 
 const createStudent = (page, id, password, confirmPassword) => {
-  var idValidity = checkInput.checkIdValidity(id);
-  var passwordValidity = checkInput.checkPasswordValidity(password);
-  var passwordConsistency = checkPasswordConsistency(password, confirmPassword);
-  if (!idValidity || !passwordValidity || !passwordConsistency) {
+  var idValid = checkInput.checkIdValidity(id);
+  var passwordValid = checkInput.checkPasswordValidity(password);
+  var passwordConsistent = checkPasswordConsistency(password, confirmPassword);
+  if (!idValid || !passwordValid || !passwordConsistent) {
     page.displayResult({
-      idValidity: idValidity,
-      idNew: true, //未检查，则不用考虑用户名已存在的问题
-      passwordValidity: passwordValidity,
-      passwordConsistency: passwordConsistency,
+      idNotValid: !idValid,
+      idStatus: 0, //未检查，则不用考虑用户名已存在的问题
+      passwordNotValid: !passwordValid,
+      passwordNotConsistent: !passwordConsistent,
     });
     return;
   } 
   if (debugFunc.isDebug == true) {
     page.displayResult({
-      idValidity: idValidity,
-      idNew: debugFunc.addStudentDebug(id, password), 
-      passwordValidity: passwordValidity,
-      passwordConsistency: passwordConsistency,
+      idNotValid: !idValid,
+      idStatus: debugFunc.addStudentDebug(id, password),
+      passwordNotValid: !passwordValid,
+      passwordNotConsistent: !passwordConsistent,
     });
   }
   else{
@@ -34,12 +34,20 @@ const createStudent = (page, id, password, confirmPassword) => {
       responseType: 'text',
       success: function (res) {
         console.log(res);
-        idNew = res.data.returnValue;
+        if(res.statusCode == 200){
+          idStatus = 0;
+        }
+        else if(res.statusCode == 409){
+          idStatus = 1;
+        }
+        else{
+          idStatus = 2;
+        }
         page.displayResult({
-          idValidity: idValidity,
-          idNew: idNew,
-          passwordValidity: passwordValidity,
-          passwordConsistency: passwordConsistency,
+          idNotValid: !idValid,
+          idStatus: idStatus,
+          passwordNotValid: !passwordValid,
+          passwordNotConsistent: !passwordConsistent,
         });
       },
       fail: function (res) { },

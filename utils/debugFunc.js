@@ -158,7 +158,7 @@ const addStudentDebug = (id, password) => {
   });
     //(id == '12344321' && password == 'abc123');//就加这一个
   if(isNew == false){
-    return false;
+    return 1;
   }
   studentsDebug.push({
     id: id,
@@ -166,21 +166,33 @@ const addStudentDebug = (id, password) => {
     inBlackList: false,
   });
   console.log(studentsDebug);
-  return true;
+  return 0;
 }
 
 const studentLoginDebug = (id, password) => {
   var student = studentsDebug.find((value, index, array) => {
-    return value.id == id && value.password == password;
+    return value.id == id;
   });
-  return student != undefined;
+  if (student == undefined) {
+    return 1;
+  }
+  if (student.password != password) {
+    return 2;
+  }
+  return 0;
 }
 
 const adminLoginDebug = (id, password) => {
-  var admin = adminsDebug.find((value, index, array) => { 
-    return value.id == id && value.password == password;
+  var admin = adminssDebug.find((value, index, array) => {
+    return value.id == id;
   });
-  return admin != undefined;
+  if (admin == undefined) {
+    return 1;
+  }
+  if (admin.password != password) {
+    return 2;
+  }
+  return 0;
 }
 
 const getStudentByIdDebug = (id) => {

@@ -16,7 +16,9 @@ Page({
     type: 0,
     login: {
       text: '登录',
-      notValidMsg: '登录失败，账号或密码不正确！',
+      idNotValidMsg: '登录失败，账号不正确！',
+      passwordNotValidMsg: '登录失败，密码不正确！',
+      notSucceedMsg: '登录失败，请检查网络情况！',
     },
     inputId: {
       text: '输入学号（只能为8位数字）',
@@ -124,7 +126,7 @@ Page({
   showResult: function (returnData) {
     this.setData(returnData);
     for (var d in returnData) {
-      if (!returnData[d]) {
+      if (returnData[d]) {
         return;
       }
     }

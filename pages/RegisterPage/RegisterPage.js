@@ -8,10 +8,10 @@ Page({
    */
   data: {
     loginPage: "../UsernameLoginPage/UsernameLoginPage",
-    idValidity: true,
-    idNew: true,
-    passwordValidity: true,
-    passwordConsistency: true,
+    idNotValid: false,
+    idStatus: 0,
+    passwordNotValid: false,
+    passwordNotConsistent: false,
     id: '',
     password: '',
     confirmPassword: '',
@@ -22,6 +22,7 @@ Page({
       text: '输入学号（只能为8位数字）',
       notValidMsg: '学号不合法，只能为8位数字！',
       notNewMsg: '学号已存在！',
+      notSucceedMsg: '未知错误！请检查网络情况！',
     },
     inputPassword: {
       text: '输入密码（>=6，字母数字）',
@@ -114,7 +115,7 @@ Page({
   displayResult: function(returnData){
     this.setData(returnData);
     for (var d in returnData) {
-      if (!returnData[d]) {
+      if (returnData[d]) {
         return;
       }
     }

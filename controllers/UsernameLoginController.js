@@ -4,13 +4,13 @@ const debugFunc = require("../utils/debugFunc.js");
 const checkInput = require("../controllers/checkInputController.js");
 
 const login = (page, id, password, type) => {
-  var idValidity = checkInput.checkIdValidity(id);
-  var passwordValidity = checkInput.checkPasswordValidity(password);
-  if(!idValidity || !passwordValidity){
+  var idValid = checkInput.checkIdValidity(id);
+  var passwordValid = checkInput.checkPasswordValidity(password);
+  if(!idValid || !passwordValid){
     page.showResult({
-      idValidity: idValidity,
-      passwordValidity: passwordValidity,
-      loginValidity: true, //未检查，不用考虑
+      idNotValid: !idValid,
+      passwordNotValid: !passwordValidity,
+      loginStatus: 0, //未检查，不用考虑
     });
   }
   if (type == 0) {
@@ -22,15 +22,15 @@ const login = (page, id, password, type) => {
 }
 
 function studentLogin(page, id, password){
-  var loginValidity = true;
+  var loginStatus = 0;
   if(debugFunc.isDebug == true){
-    loginValidity = debugFunc.studentLoginDebug(id, password);
+    loginStatus = debugFunc.studentLoginDebug(id, password);
     page.showResult({
-      idValidity: true,
-      passwordValidity: true,
-      loginValidity: loginValidity,
+      idNotValid: false,
+      passwordNotValid: false,
+      loginStatus: loginStatus,
     });
-    if (loginValidity == true) {
+    if (loginStatus == 0) {
       var loginSucceed = storageLogin(0, id);
       console.log('loginSucceed = ' + loginSucceed.toString());
     }
@@ -45,13 +45,24 @@ function studentLogin(page, id, password){
       responseType: 'text',
       success: function (res) { 
         console.log(res); 
-        loginVaildity = res.data.returnValue; 
+        if(res.statusCode == 200){
+          loginStauts = 0;
+        }
+        else if(res.statusCode == 404){
+          loginStatus = 1;
+        }
+        else if(res.statusCode == 403){
+          loginStauts = 2;
+        }
+        else{
+          loginStatus = 3;
+        }
         page.showResult({
-          idValidity: true,
-          passwordValidity: true,
-          loginValidity: loginValidity,
+          idNotValid: false,
+          passwordNotValid: false,
+          loginStatus: loginStatus,
         });
-        if (loginValidity == true) {
+        if (loginStatus == 0) {
           var loginSucceed = storageLogin(0, id);
           console.log('loginSucceed = ' + loginSucceed.toString());
         }
@@ -86,13 +97,24 @@ function adminLogin(page, id, password){
       responseType: 'text',
       success: function (res) {
         console.log(res);
-        loginVaildity = res.data.returnValue;
+        if (res.statusCode == 200) {
+          loginStauts = 0;
+        }
+        else if (res.statusCode == 404) {
+          loginStatus = 1;
+        }
+        else if (res.statusCode == 403) {
+          loginStauts = 2;
+        }
+        else {
+          loginStatus = 3;
+        }
         page.showResult({
-          idValidity: true,
-          passwordValidity: true,
-          loginValidity: loginValidity,
+          idNotValid: false,
+          passwordNotValid: false,
+          loginStatus: loginStatus,
         });
-        if (loginValidity == true) {
+        if (loginStatus == 0) {
           var loginSucceed = storageLogin(1, id);
           console.log('loginSucceed = ' + loginSucceed.toString());
         }

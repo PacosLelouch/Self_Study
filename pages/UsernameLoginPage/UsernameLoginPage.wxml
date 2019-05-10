@@ -4,10 +4,10 @@
 </view>
 <view class="input-texts">
   <view class="hint">{{inputId.text}}</view>
-  <view class="errMsg" wx:if="{{!idValidity}}">{{inputId.notValidMsg}}</view>
+  <view class="errMsg" wx:if="{{idNotValid}}">{{inputId.notValidMsg}}</view>
   <input type="text" bindinput="inputId"></input>
   <view class="hint">{{inputPassword.text}}</view>
-  <view class="errMsg" wx:if="{{!passwordValidity}}">{{inputPassword.notValidMsg}}</view>
+  <view class="errMsg" wx:if="{{passwordNotValid}}">{{inputPassword.notValidMsg}}</view>
   <input type="password" bindinput="inputPassword"></input>
   <picker range="{{inputType.types}}" value="{{type}}" bindchange="inputType">
     <text>选择类型：</text>
@@ -17,4 +17,6 @@
 <view class="buttons">
   <button class="btn" hover-class="btn-hover" bindtap="login">{{login.text}}</button>
 </view>
-<view class="errMsg" wx:if="{{!loginValidity}}">{{login.notValidMsg}}</view>
+<view class="errMsg" wx:if="{{loginStatus == 1}}">{{login.idNotValidMsg}}</view>
+<view class="errMsg" wx:if="{{loginStatus == 2}}">{{login.passwordNotValidMsg}}</view>
+<view class="errMsg" wx:if="{{loginStatus == 3}}">{{login.notSucceedValidMsg}}</view>
