@@ -5,7 +5,7 @@ module.exports = {
     method: 'POST',
   },
   studentLogin: {
-    url: serverBaseUrl + "student/privilege/std/",
+    url: serverBaseUrl + "student/privilege/student/",
     method: 'GET',
   },
   adminLogin: {

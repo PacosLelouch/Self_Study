@@ -51,7 +51,7 @@ function studentLogin(page, id, password){
         else if(res.statusCode == 404){
           loginStatus = 1;
         }
-        else if(res.statusCode == 403){
+        else if(res.statusCode == 401){
           loginStatus = 2;
         }
         else{
