@@ -1,7 +1,7 @@
 // debugFunc.js
 // for debugging without server.
-//const isDebug = true;
-const isDebug = false;
+const isDebug = true;
+//const isDebug = false;
 
 const stateList = [
   '待使用',
@@ -184,7 +184,7 @@ const studentLoginDebug = (id, password) => {
 }
 
 const adminLoginDebug = (id, password) => {
-  var admin = adminssDebug.find((value, index, array) => {
+  var admin = adminsDebug.find((value, index, array) => {
     return value.id == id;
   });
   if (admin == undefined) {

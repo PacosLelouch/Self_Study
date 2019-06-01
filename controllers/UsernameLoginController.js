@@ -80,15 +80,20 @@ function studentLogin(page, id, password){
 }
 
 function adminLogin(page, id, password){
-  var loginValidity = true;
+  var loginStatus = 0;
   if (debugFunc.isDebug == true) {
-    loginValidity = debugFunc.adminLoginDebug(id, password);
+    loginStatus = debugFunc.adminLoginDebug(id, password);
     page.showResult({
       idValidity: true,
       passwordValidity: true,
       loginValidity: loginValidity,
     });
-    if (loginValidity == true) {
+    page.showResult({
+      idNotValid: false,
+      passwordNotValid: false,
+      loginStatus: loginStatus,
+    });
+    if (loginStatus == 0) {
       var loginSucceed = storageLogin(1, id);
       console.log('loginSucceed = ' + loginSucceed.toString());
     }
