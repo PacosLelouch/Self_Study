@@ -12,12 +12,12 @@ const login = (page, id, password, type) => {
       passwordNotValid: !passwordValidity,
       loginStatus: 0, //未检查，不用考虑
     });
-  }
-  if (type == 0) {
-    studentLogin(page, id, password);
-  }
-  else if (type == 1) {
-    adminLogin(page, id, password);
+  } else {
+    if (type == 0) {
+      studentLogin(page, id, password);
+    } else if (type == 1) {
+      adminLogin(page, id, password);
+    }
   }
 }
 
@@ -34,8 +34,7 @@ function studentLogin(page, id, password){
       var loginSucceed = storageLogin(0, id);
       console.log('loginSucceed = ' + loginSucceed.toString());
     }
-  }
-  else{
+  } else{
     wx.request({
       url: serverUrl.studentLogin.url,
       data: { id: id, password: password, },
@@ -47,14 +46,11 @@ function studentLogin(page, id, password){
         console.log(res); 
         if(res.statusCode == 200){
           loginStatus = 0;
-        }
-        else if(res.statusCode == 404){
+        } else if(res.statusCode == 404){
           loginStatus = 1;
-        }
-        else if(res.statusCode == 401){
+        } else if(res.statusCode == 401){
           loginStatus = 2;
-        }
-        else{
+        } else{
           loginStatus = -1;
         }
         page.showResult({
@@ -84,11 +80,6 @@ function adminLogin(page, id, password){
   if (debugFunc.isDebug == true) {
     loginStatus = debugFunc.adminLoginDebug(id, password);
     page.showResult({
-      idValidity: true,
-      passwordValidity: true,
-      loginValidity: loginValidity,
-    });
-    page.showResult({
       idNotValid: false,
       passwordNotValid: false,
       loginStatus: loginStatus,
@@ -97,8 +88,7 @@ function adminLogin(page, id, password){
       var loginSucceed = storageLogin(1, id);
       console.log('loginSucceed = ' + loginSucceed.toString());
     }
-  }
-  else {
+  } else {
     wx.request({
       url: serverUrl.adminLogin.url,
       data: { id: id, password: password, },
@@ -110,14 +100,11 @@ function adminLogin(page, id, password){
         console.log(res);
         if (res.statusCode == 200) {
           loginStatus = 0;
-        }
-        else if (res.statusCode == 404) {
+        } else if (res.statusCode == 404) {
           loginStatus = 1;
-        }
-        else if (res.statusCode == 403) {
+        } else if (res.statusCode == 403) {
           loginStatus = 2;
-        }
-        else {
+        } else {
           loginStatus = -1;
         }
         page.showResult({
@@ -148,8 +135,7 @@ function storageLogin(type, id){
     wx.setStorageSync('id', id.toString());
     wx.setStorageSync('logined', 'true');
     return true;
-  }
-  catch (e){
+  } catch (e){
     console.log('Storage Error.');
     console.log(e.toString());
     return false;
