@@ -9,7 +9,7 @@ const login = (page, id, password, type) => {
   if(!idValid || !passwordValid){
     page.showResult({
       idNotValid: !idValid,
-      passwordNotValid: !passwordValidity,
+      passwordNotValid: !passwordValid,
       loginStatus: 0, //未检查，不用考虑
     });
   } else {
