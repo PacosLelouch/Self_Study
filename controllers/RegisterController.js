@@ -27,7 +27,7 @@ const createStudent = (page, id, password, confirmPassword) => {
     var idStatus;
     wx.request({
       url: serverUrl.register.url,
-      data: { id: id, password: password, },
+      data: { name: id, password: password, },
       header: { 'content-type': 'application/json', },
       method: serverUrl.register.method,
       dataType: 'json',

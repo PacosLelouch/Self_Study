@@ -48,14 +48,17 @@ const getOrdersByStudentId = (page, id) => {
       let that = this;
       wx.request({
         url: url,
-        data: { id: id },
+        data: { name: id },
         header: { 'content-type': 'application/json', },
         method: 'GET',
         dataType: 'json',
         responseType: 'text',
         success: function (res) { 
-          console.log(res); 
+          console.log(res);
           returnData = res.data.returnValue;
+          //后端的name是前端的id
+          returnData.id = returnData.name;
+          delete returnData.name;
           page.setOrders(returnData);
         },
         fail: function (res) { },

@@ -37,7 +37,7 @@ function studentLogin(page, id, password){
   } else{
     wx.request({
       url: serverUrl.studentLogin.url,
-      data: { id: id, password: password, },
+      data: { name: id, password: password, },
       header: { 'content-type': 'application/json', },
       method: serverUrl.studentLogin.method,
       dataType: 'json',
@@ -91,7 +91,7 @@ function adminLogin(page, id, password){
   } else {
     wx.request({
       url: serverUrl.adminLogin.url,
-      data: { id: id, password: password, },
+      data: { name: id, password: password, },
       header: { 'content-type': 'application/json', },
       method: serverUrl.adminLogin.method,
       dataType: 'json',
