@@ -2,7 +2,7 @@
 // for debugging without server.
 const isDebug = true;
 //const isDebug = false;
-
+const md5 = require("../controllers/MD5.js");
 const stateList = [
   '待使用',
   '使用中',
@@ -100,13 +100,13 @@ var orderRoomsDebug = getOrderRooms(roomsDebug, orderRecordsDebug);
 
 var studentsDebug = [{
   id: '12345678',
-  password: 'abc123',//未加密
+  password: md5.encode('abc123'),
   inBlackList: false,
 }];
 
 var adminsDebug = [{
   id: '87654321',
-  password: 'abc123',//未加密
+  password: md5.encode('abc123'),//未加密
 }];
 
 function getOrderRooms(rooms, orderRecords){
@@ -228,7 +228,7 @@ const getOrdersByStudentIdDebug = (id) => {
   };
 }
 
-const cancelOrderRecord = (orderId) => {
+const cancelOrderRecordDebug = (orderId) => {
   var cancelledOrder = orderRecordsDebug.find((value, index, array) => {
     return value.orderId == orderId;
   });
@@ -246,7 +246,13 @@ const getAllRoomsDebug = () => {
 
 const getOrderRoomsByDateDebug = (date) => {
   return orderRoomsDebug.find((value, index, array) => {
-    return value[0]/*[0]*/.date == date;
+    return value[0].date == date;
+  });
+}
+
+const getOrderRoomsByDateAndTimeDebug = (date, timeNumber) => {
+  return orderRoomsDebug.find((value, index, array) => {
+    return value[0].date == date && value[0].timeNumber == timeNumber;
   });
 }
 
@@ -257,7 +263,8 @@ module.exports = {
   adminLoginDebug: adminLoginDebug,
   getStudentByIdDebug: getStudentByIdDebug,
   getOrdersByStudentIdDebug: getOrdersByStudentIdDebug,
-  cancelOrderRecord: cancelOrderRecord,
+  cancelOrderRecordDebug: cancelOrderRecordDebug,
   getAllRoomsDebug: getAllRoomsDebug,
   getOrderRoomsByDateDebug: getOrderRoomsByDateDebug,
+  getOrderRoomsByDateAndTimeDebug: getOrderRoomsByDateAndTimeDebug,
 }

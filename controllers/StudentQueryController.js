@@ -14,7 +14,21 @@ const queryRoom = (page) => {
   }
 }
 
-const queryOrder = (page, date) =>{
+const queryOrder = (page, date, timeNumber) =>{
+  if (debugFunc.isDebug == true) {
+    var orderRooms = debugFunc.getOrderRoomsByDateAndTimeDebug(date, timeNumber);
+    console.log(orderRooms);
+    page.setData({
+      grid: orderRooms,
+    });
+  }
+  else {
+    //TODO
+  }
+}
+
+//Obsolete
+const queryOrderObsolete = (page, date) =>{
   if(debugFunc.isDebug == true){
     var orderRooms = debugFunc.getOrderRoomsByDateDebug(date);
     console.log(orderRooms);

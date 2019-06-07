@@ -1,8 +1,10 @@
 const serverUrl = require("../utils/serverUrl.js");
 const debugFunc = require("../utils/debugFunc.js");
-const checkInput = require("../controllers/checkInputController.js");
+const checkInput = require("../controllers/CheckInputController.js");
+const md5 = require("../controllers/MD5.js");
 
-const createStudent = (page, id, password, confirmPassword) => {
+const createStudent = (page, id, rawPassword, confirmPassword) => {
+  var password = md5.encode(rawPassword);
   var idValid = checkInput.checkIdValidity(id);
   var passwordValid = checkInput.checkPasswordValidity(password);
   var passwordConsistent = checkPasswordConsistency(password, confirmPassword);

@@ -1,9 +1,11 @@
 // pages/UsernameLoginPage/UsernameLoginController.js
 const serverUrl = require("../utils/serverUrl.js");
 const debugFunc = require("../utils/debugFunc.js");
-const checkInput = require("../controllers/checkInputController.js");
+const checkInput = require("../controllers/CheckInputController.js");
+const md5 = require("../controllers/MD5.js");
 
-const login = (page, id, password, type) => {
+const login = (page, id, rawPassword, type) => {
+  var password = md5.encode(rawPassword);
   var idValid = checkInput.checkIdValidity(id);
   var passwordValid = checkInput.checkPasswordValidity(password);
   if(!idValid || !passwordValid){

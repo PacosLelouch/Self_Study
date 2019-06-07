@@ -74,7 +74,7 @@ function showCancel (page, data) {
         console.log('confirm');
         var result = false;
         if(debugFunc.isDebug == true){
-          result = debugFunc.cancelOrderRecord(data.orderId);
+          result = debugFunc.cancelOrderRecordDebug(data.orderId);
           if (result == true) {
 
             page.showStudentInfo();
