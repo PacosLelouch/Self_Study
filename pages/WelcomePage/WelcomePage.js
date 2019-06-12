@@ -7,9 +7,9 @@ Page({
    */
   data: {
     title: "自习室预约系统",
-    logined: null,
     type: null,
-    id: null,
+    accountId: null,
+    name: null,
     register: {
       url: "../RegisterPage/RegisterPage",
       text: "注册",
@@ -53,16 +53,16 @@ Page({
   onLoad: function (options) {
     try {
       this.setData({
-        logined: wx.getStorageSync('logined'),
+        name: wx.getStorageSync('name'),
         type: wx.getStorageSync('type'),
-        id: wx.getStorageSync('id'),
+        accountId: wx.getStorageSync('accountId'),
       });
       const systemInfo = wx.getSystemInfoSync();
       wx.setStorageSync('wHeight', systemInfo.windowHeight);
       wx.setStorageSync('wWidth', systemInfo.windowWidth);
-      console.log(this.data.logined);
+      console.log(this.data.name);
       console.log(this.data.type);
-      console.log(this.data.id);
+      console.log(this.data.accountId);
     }
      catch (e) {
       console.log("Fail to load welcome page.");
@@ -178,9 +178,9 @@ Page({
 
   logout: function (e) {
     try{
-      wx.removeStorageSync('logined');
+      wx.removeStorageSync('name');
       wx.removeStorageSync('type');
-      wx.removeStorageSync('id');
+      wx.removeStorageSync('accountId');
       wx.redirectTo({
         url: '../WelcomePage/WelcomePage',
       });

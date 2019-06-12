@@ -1,5 +1,5 @@
-const checkIdValidity = id => { //学号必须合法，即8位数字。
-  var str = id;
+const checkNameValidity = name => { //学号必须合法，即8位数字。
+  var str = name;
   if (str == null || str.length != 8) {
     return false;
   }
@@ -27,6 +27,6 @@ const checkPasswordValidity = password => { //密码至少包含6位符号，必
 }
 
 module.exports = {
-  checkIdValidity: checkIdValidity,
+  checkNameValidity: checkNameValidity,
   checkPasswordValidity: checkPasswordValidity,
 };

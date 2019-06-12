@@ -1,67 +1,106 @@
 const serverUrl = require("../utils/serverUrl.js");
 const debugFunc = require("../utils/debugFunc.js");
 
-const getStudentInfo = (page) => {
-  var returnData = {};
+const getStudentInfo = (callBack) => {
   try{
-    var id = wx.getStorageSync('id');
-    returnData.id = id;
+    var accountId = wx.getStorageSync('accountId');
+    returnData.accountId = accountId;
     if(debugFunc.isDebug == true){
-      returnData = debugFunc.getStudentByIdDebug(id);
-      page.setStudent(returnData);
+      var returnData = debugFunc.getStudentByIdDebug(accountId);
+      callBack({
+        getInfoStatus: 0,
+        info: returnData,
+        message: '成功',
+      });
     }
     else{
-      var url = serverUrl.studentInfoUrl;
+      var url = serverUrl.studentInfo.url;
       let that = this;
       wx.request({
         url: url,
-        data: { id: id },
+        data: { id: accountId },
         header: { 'content-type': 'application/json', },
-        method: 'GET',
+        method: serverUrl.studentInfo.method,
         dataType: 'json',
         responseType: 'text',
         success: function (res) { 
-          console.log(res); 
-          returnData = res.data.returnValue;
-          page.setStudent(returnData);
+          console.log(res);
+          var getInfoStatus = 0;
+          if (res.data.status == 'OK') {
+            getInfoStatus = 0;
+          } else if (res.data.status == 'UNAUTHORIZED') {
+            getInfoStatus = 1;
+          } else {
+            getInfoStatus = -1;
+          }
+          callBack({
+            getInfoStatus: getInfoStatus,
+            info: res.data.data,
+            message: res.data.message,
+          });
         },
-        fail: function (res) { },
+        fail: function (res) {
+          console.log(res);
+          callBack({
+            getInfoStatus: -1,
+            info: res.data.data,
+            message: res.data.message,
+          });
+        },
         complete: function (res) { },
       })
     }
-  }
-  catch (e) {
+  } catch (e) {
     console.log('Get student info error.');
     console.log(e.toString());
   }
 }
 
-const getOrdersByStudentId = (page, id) => {
-  var returnData = {};
+const getOrders = (callBack) => {
   try {
+    var accountId = wx.getStorageSync('accountId');
     if (debugFunc.isDebug == true) {
-      returnData = debugFunc.getOrdersByStudentIdDebug(id);
-      page.setOrders(returnData);
+      var returnData = debugFunc.getOrdersByStudentIdDebug(accountId);
+      callBack({
+        getOrdersStatus: 0,
+        orderList: returnData,
+        message: '成功',
+      });
     }
     else {
-      var url = serverUrl.ordersUrl;
+      var url = serverUrl.studentOrder.url;
       let that = this;
       wx.request({
         url: url,
-        data: { name: id },
+        data: { account_id: accountId },
         header: { 'content-type': 'application/json', },
-        method: 'GET',
+        method: serverUrl.studentOrder.method,
         dataType: 'json',
         responseType: 'text',
-        success: function (res) { 
+        success: function (res) {
           console.log(res);
-          returnData = res.data.returnValue;
-          //后端的name是前端的id
-          returnData.id = returnData.name;
-          delete returnData.name;
-          page.setOrders(returnData);
+          var getOrdersStatus = 0;
+          if (res.data.status == 'OK') {
+            getOrdersStatus = 0;
+          } else if (res.data.status == 'UNAUTHORIZED') {
+            getOrdersStatus = 1;
+          } else {
+            getOrdersStatus = -1;
+          }
+          callBack({
+            getOrdersStatus: getOrdersStatus,
+            orderList: res.data.data,
+            message: res.data.message,
+          });
         },
-        fail: function (res) { },
+        fail: function (res) {
+          console.log(res);
+          callBack({
+            getOrdersStatus: -1,
+            orderList: res.data.data,
+            message: res.data.message,
+          });
+        },
         complete: function (res) { },
       })
     }
@@ -74,5 +113,5 @@ const getOrdersByStudentId = (page, id) => {
 
 module.exports = {
   getStudentInfo: getStudentInfo,
-  getOrdersByStudentId: getOrdersByStudentId,
+  getOrders: getOrders,
 }

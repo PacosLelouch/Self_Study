@@ -1,5 +1,6 @@
 // pages/StudentQueryPage/StudentQueryPage.js
 const studentQueryController = require("../../controllers/StudentQueryController.js");
+const orderRoomController = require("../../controllers/OrderRoomController.js");
 
 Page({
 
@@ -32,7 +33,7 @@ Page({
   onLoad: function (options) {
     try{
       this.setData({
-        datesPro: [0, 1, 2, 3, 4, 5, 6].map((value, index, array) => {
+        datesPro: [1, 2, 3, 4, 5, 6, 7].map((value, index, array) => {
           var date = new Date();
           date.setDate(date.getDate() + value);
           return date;
@@ -117,5 +118,6 @@ Page({
   order: function (e) {
     console.log(e);
     var index = parseInt(e.currentTarget.id);
+    orderRoomController.order(this);
   },
 })

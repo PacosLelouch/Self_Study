@@ -3,65 +3,76 @@ const debugFunc = require("../utils/debugFunc.js");
 const checkInput = require("../controllers/CheckInputController.js");
 const md5 = require("../controllers/MD5.js");
 
-const createStudent = (page, id, rawPassword, confirmPassword) => {
-  var password = md5.encode(rawPassword);
-  var idValid = checkInput.checkIdValidity(id);
-  var passwordValid = checkInput.checkPasswordValidity(password);
-  var passwordConsistent = checkPasswordConsistency(password, confirmPassword);
-  if (!idValid || !passwordValid || !passwordConsistent) {
-    page.displayResult({
-      idNotValid: !idValid,
-      idStatus: 0, //未检查，则不用考虑用户名已存在的问题
-      passwordNotValid: !passwordValid,
-      passwordNotConsistent: !passwordConsistent,
-    });
-    return;
-  } 
-  if (debugFunc.isDebug == true) {
-    page.displayResult({
-      idNotValid: !idValid,
-      idStatus: debugFunc.addStudentDebug(id, password),
-      passwordNotValid: !passwordValid,
-      passwordNotConsistent: !passwordConsistent,
-    });
-  }
-  else{
-    var idStatus;
-    wx.request({
-      url: serverUrl.register.url,
-      data: { name: id, password: password, },
-      header: { 'content-type': 'application/json', },
-      method: serverUrl.register.method,
-      dataType: 'json',
-      responseType: 'text',
-      success: function (res) {
-        console.log(res);
-        if(res.statusCode == 200){
-          idStatus = 0;
-        }
-        else if(res.statusCode == 409){
-          idStatus = 1;
-        }
-        else{
-          idStatus = -1;
-        }
-        page.displayResult({
-          idNotValid: !idValid,
-          idStatus: idStatus,
-          passwordNotValid: !passwordValid,
-          passwordNotConsistent: !passwordConsistent,
-        });
-      },
-      fail: function (res) {
-        page.displayResult({
-          idNotValid: !idValid,
-          idStatus: -1,
-          passwordNotValid: !passwordValid,
-          passwordNotConsistent: !passwordConsistent,
-        });
-      },
-      complete: function (res) { },
-    });
+const createStudent = (name, rawPassword, confirmRawPassword, callBack) => {
+  try{
+    var nameValid = checkInput.checkNameValidity(name);
+    var passwordValid = checkInput.checkPasswordValidity(rawPassword);
+    var passwordConsistent = checkPasswordConsistency(rawPassword, confirmRawPassword);
+    var password = md5.encode(rawPassword);
+    var confirmPassword = md5.encode(confirmRawPassword);
+    if (!nameValid || !passwordValid || !passwordConsistent) {
+      callBack({
+        nameNotValid: !nameValid,
+        nameStatus: 0, //未检查，则不用考虑用户名已存在的问题
+        passwordNotValid: !passwordValid,
+        passwordNotConsistent: !passwordConsistent,
+        message: '输入不合法',
+      });
+      return;
+    } 
+    if (debugFunc.isDebug == true) {
+      callBack({
+        nameNotValid: !nameValid,
+        nameStatus: debugFunc.addStudentDebug(name, password),
+        passwordNotValid: !passwordValid,
+        passwordNotConsistent: !passwordConsistent,
+        message: '？？？',
+      });
+    }
+    else{
+      wx.request({
+        url: serverUrl.register.url,
+        data: { name: name, password: password, },
+        header: { 'content-type': 'application/json', },
+        method: serverUrl.register.method,
+        dataType: 'json',
+        responseType: 'text',
+        success: function (res) {
+          console.log(res);
+          var nameStatus;
+          if(res.data.status == 'OK'){//200
+            nameStatus = 0;
+          }
+          else if(res.data.status == 'CONFLICT'){//409
+            nameStatus = 1;
+          }
+          else{
+            nameStatus = -1;
+          }
+          callBack({
+            nameNotValid: !nameValid,
+            nameStatus: nameStatus,
+            passwordNotValid: !passwordValid,
+            passwordNotConsistent: !passwordConsistent,
+            message: res.data.message,
+          });
+        },
+        fail: function (res) {
+          console.log(res);
+          callBack({
+            nameNotValid: !nameValid,
+            nameStatus: -1,
+            passwordNotValid: !passwordValid,
+            passwordNotConsistent: !passwordConsistent,
+            message: res.data.message,
+          });
+        },
+        complete: function (res) { },
+      });
+    }
+  } catch (e) {
+    console.log('Register error.');
+    console.log(e.toString());
   }
 }
 

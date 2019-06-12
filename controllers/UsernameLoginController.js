@@ -4,70 +4,71 @@ const debugFunc = require("../utils/debugFunc.js");
 const checkInput = require("../controllers/CheckInputController.js");
 const md5 = require("../controllers/MD5.js");
 
-const login = (page, id, rawPassword, type) => {
+const login = (name, rawPassword, type, callBack) => {
+  var nameValid = checkInput.checkNameValidity(name);
+  var passwordValid = checkInput.checkPasswordValidity(rawPassword);
   var password = md5.encode(rawPassword);
-  var idValid = checkInput.checkIdValidity(id);
-  var passwordValid = checkInput.checkPasswordValidity(password);
-  if(!idValid || !passwordValid){
-    page.showResult({
-      idNotValid: !idValid,
+  if(!nameValid || !passwordValid){
+    callBack({
+      nameNotValid: !nameValid,
       passwordNotValid: !passwordValid,
       loginStatus: 0, //未检查，不用考虑
     });
   } else {
     if (type == 0) {
-      studentLogin(page, id, password);
+      studentLogin(name, password, callBack);
     } else if (type == 1) {
-      adminLogin(page, id, password);
+      adminLogin(name, password, callBack);
     }
   }
 }
 
-function studentLogin(page, id, password){
+
+function studentLogin(name, password, callBack){
   var loginStatus = 0;
   if(debugFunc.isDebug == true){
-    loginStatus = debugFunc.studentLoginDebug(id, password);
-    page.showResult({
-      idNotValid: false,
+    loginStatus = debugFunc.studentLoginDebug(name, password);
+    callBack({
+      nameNotValid: false,
       passwordNotValid: false,
       loginStatus: loginStatus,
     });
     if (loginStatus == 0) {
-      var loginSucceed = storageLogin(0, id);
+      var loginSucceed = storageLogin(0, name);
       console.log('loginSucceed = ' + loginSucceed.toString());
     }
   } else{
     wx.request({
       url: serverUrl.studentLogin.url,
-      data: { name: id, password: password, },
+      data: { name: name, password: password, type:0 },
       header: { 'content-type': 'application/json', },
       method: serverUrl.studentLogin.method,
       dataType: 'json',
       responseType: 'text',
       success: function (res) { 
         console.log(res); 
-        if(res.statusCode == 200){
+        if(res.data.status == 'OK'){//200
           loginStatus = 0;
-        } else if(res.statusCode == 404){
+        } else if (res.data.status == 'UNAUTHORIZED'){//403
           loginStatus = 1;
-        } else if(res.statusCode == 401){
+        } else if (res.data.status == 'FORBIDDEN'){//401
           loginStatus = 2;
         } else{
           loginStatus = -1;
         }
-        page.showResult({
-          idNotValid: false,
+        callBack({
+          nameNotValid: false,
           passwordNotValid: false,
           loginStatus: loginStatus,
         });
         if (loginStatus == 0) {
-          var loginSucceed = storageLogin(0, id);
+          var loginSucceed = storageLogin(0, res.data.data, name);
           console.log('loginSucceed = ' + loginSucceed.toString());
         }
       },
       fail: function (res) { 
-        page.showResult({
-          idNotValid: false,
+        callBack({
+          nameNotValid: false,
           passwordNotValid: false,
           loginStatus: -1,
         });
@@ -77,53 +78,55 @@ function studentLogin(page, id, password){
   }
 }
 
-function adminLogin(page, id, password){
+function adminLogin(name, password, callBack){
   var loginStatus = 0;
   if (debugFunc.isDebug == true) {
-    loginStatus = debugFunc.adminLoginDebug(id, password);
-    page.showResult({
-      idNotValid: false,
+    loginStatus = debugFunc.adminLoginDebug(name, password);
+    callBack({
+      nameNotValid: false,
       passwordNotValid: false,
       loginStatus: loginStatus,
     });
     if (loginStatus == 0) {
-      var loginSucceed = storageLogin(1, id);
+      var loginSucceed = storageLogin(1, name);
       console.log('loginSucceed = ' + loginSucceed.toString());
     }
   } else {
     wx.request({
       url: serverUrl.adminLogin.url,
-      data: { name: id, password: password, },
+      data: { name: name, password: password, type:1 },
       header: { 'content-type': 'application/json', },
       method: serverUrl.adminLogin.method,
       dataType: 'json',
       responseType: 'text',
       success: function (res) {
         console.log(res);
-        if (res.statusCode == 200) {
+        if(res.data.status == 'OK'){//200
           loginStatus = 0;
-        } else if (res.statusCode == 404) {
+        } else if (res.data.status == 'UNAUTHORIZED'){//403
           loginStatus = 1;
-        } else if (res.statusCode == 403) {
+        } else if(res.data.status == 'FORBIDDEN'){//401
           loginStatus = 2;
-        } else {
+        } else{
           loginStatus = -1;
         }
-        page.showResult({
-          idNotValid: false,
+        callBack({
+          nameNotValid: false,
           passwordNotValid: false,
           loginStatus: loginStatus,
+          message: res.data.message,
         });
         if (loginStatus == 0) {
-          var loginSucceed = storageLogin(1, id);
+          var loginSucceed = storageLogin(1, res.data.data, name);
           console.log('loginSucceed = ' + loginSucceed.toString());
         }
       },
       fail: function (res) { 
-        page.showResult({
-          idNotValid: false,
+        callBack({
+          nameNotValid: false,
           passwordNotValid: false,
           loginStatus: -1,
+          message: res.data.message,
         });
       },
       complete: function (res) { },
@@ -131,11 +134,11 @@ function adminLogin(page, id, password){
   }
 }
 
-function storageLogin(type, id){
+function storageLogin(type, accountId, name){
   try{
     wx.setStorageSync('type', type.toString());
-    wx.setStorageSync('id', id.toString());
-    wx.setStorageSync('logined', 'true');
+    wx.setStorageSync('name', name.toString());
+    wx.setStorageSync('accountId', accountId.toString());
     return true;
   } catch (e){
     console.log('Storage Error.');

@@ -1,7 +1,7 @@
 // debugFunc.js
 // for debugging without server.
-const isDebug = true;
-//const isDebug = false;
+//const isDebug = true;
+const isDebug = false;
 const md5 = require("../controllers/MD5.js");
 const stateList = [
   '待使用',
@@ -21,47 +21,51 @@ const timeList = [
 ];
 
 var roomsDebug = [{
+  roomId: 1,
   roomName: '图书馆',
   capacity: 400,
-  plugCapacity: 20,
+  chargeSocketCapacity: 20,
 }, {
+  romId: 2,
   roomName: '公教楼D102',
   capacity: 150,
-  plugCapacity: 3,
+  chargeSocketCapacity: 3,
 }, {
+  roomId: 3,
   roomName: '公教楼D103',
   capacity: 150,
-  plugCapacity: 3,
+  chargeSocketCapacity: 3,
 }, {
+  roomId: 4,
   roomName: '公教楼D104',
   capacity: 150,
-  plugCapacity: 3,
+  chargeSocketCapacity: 3,
 }];
 
 var orderRecordsDebug = [{
   orderId: '1',
   id: '12345678',
   date: getDateAfterNDays(0),
-  location: '公教楼D103',
+  roomId: 3,
   timeNumber: 6,
   state: 0,
-  usePlug: false,
+  useChargeSocket: false,
 }, {
   orderId: '1234',
   id: '12345678',
   date: getDateAfterNDays(2),
-  location: '公教楼D102',
+  roomId: 2,
   timeNumber: 0,
   state: 0,
-  usePlug: true,
+  useChargeSocket: true,
 }, {
   orderId: '1235',
   id: '12345678',
   date: getDateAfterNDays(2),
-  location: '公教楼D102',
+  roomId: 2,
   timeNumber: 1,
   state: 0,
-  usePlug: false,
+  useChargeSocket: false,
 }, {
   orderId: '12450',
   id: '12345678',
@@ -69,7 +73,7 @@ var orderRecordsDebug = [{
   location: '图书馆',
   timeNumber: 6,
   state: 0,
-  usePlug: true,
+  useChargeSocket: true,
 }, {
   orderId: '1236',
   id: '12344321',
@@ -77,7 +81,7 @@ var orderRecordsDebug = [{
   location: '公教楼D102',
   timeNumber: 3,
   state: 0,
-  usePlug: false,
+  useChargeSocket: false,
 }, {
   orderId: '12444',
   id: '12344321',
@@ -85,7 +89,7 @@ var orderRecordsDebug = [{
   location: '公教楼D103',
   timeNumber: 5,
   state: 0,
-  usePlug: true,
+  useChargeSocket: true,
 }, {
   orderId: '12445',
   id: '12344321',
@@ -93,19 +97,21 @@ var orderRecordsDebug = [{
   location: '公教楼D104',
   timeNumber: 6,
   state: 1,
-  usePlug: true,
+  useChargeSocket: true,
 }];
 
 var orderRoomsDebug = getOrderRooms(roomsDebug, orderRecordsDebug);
 
 var studentsDebug = [{
-  id: '12345678',
+  accountId: 1,
+  name: '12345678',
   password: md5.encode('abc123'),
   inBlackList: false,
 }];
 
 var adminsDebug = [{
-  id: '87654321',
+  accountId: 1,
+  name: '87654321',
   password: md5.encode('abc123'),//未加密
 }];
 
@@ -122,7 +128,7 @@ function getOrderRooms(rooms, orderRecords){
           date: getDateAfterNDays(i),
           timeNumber: k,
           numberOfOrder: 0,
-          numberOfOrderedPlug: 0,
+          numberOfOrderedChargeSocket: 0,
         }
         orderRoom.numberOfOrder = orderRecords.filter((value, index, array) => {
           return value.location == orderRoom.roomName &&
@@ -130,12 +136,12 @@ function getOrderRooms(rooms, orderRecords){
             value.timeNumber == orderRoom.timeNumber &&
             (value.state == 0 || value.state == 1);
         }).length;
-        orderRoom.numberOfOrderedPlug = orderRecords.filter((value, index, array) => {
+        orderRoom.numberOfOrderedChargeSocket = orderRecords.filter((value, index, array) => {
           return value.location == orderRoom.roomName &&
             value.date == orderRoom.date &&
             value.timeNumber == orderRoom.timeNumber &&
             (value.state == 0 || value.state == 1) &&
-            value.usePlug == true;
+            value.useChargeSocket == true;
         }).length;
         ans[ans.length - 1]/*[ans[ans.length - 1].length - 1]*/.push(orderRoom);
       }
@@ -152,17 +158,17 @@ function getDateAfterNDays(n){
   }).join('-');
 }
 
-const addStudentDebug = (id, password) => {
+const addStudentDebug = (name, password) => {
   var isNew = studentsDebug.every((value, index, array) => {
-    //console.log('value.id:' + value.id + ', id:' + id + ', ' + (value.id != id).toString());
-    return value.id != id;
+    //console.log('value.name:' + value.name + ', name:' + name + ', ' + (value.name != name).toString());
+    return value.name != name;
   });
-    //(id == '12344321' && password == 'abc123');//就加这一个
+    //(name == '12344321' && password == 'abc123');//就加这一个
   if(isNew == false){
     return 1;
   }
   studentsDebug.push({
-    id: id,
+    name: name,
     password: password,
     inBlackList: false,
   });
@@ -170,9 +176,9 @@ const addStudentDebug = (id, password) => {
   return 0;
 }
 
-const studentLoginDebug = (id, password) => {
+const studentLoginDebug = (name, password) => {
   var student = studentsDebug.find((value, index, array) => {
-    return value.id == id;
+    return value.name == name;
   });
   if (student == undefined) {
     return 1;
@@ -183,9 +189,9 @@ const studentLoginDebug = (id, password) => {
   return 0;
 }
 
-const adminLoginDebug = (id, password) => {
+const adminLoginDebug = (name, password) => {
   var admin = adminsDebug.find((value, index, array) => {
-    return value.id == id;
+    return value.name == name;
   });
   if (admin == undefined) {
     return 1;
@@ -212,13 +218,13 @@ const getOrdersByStudentIdDebug = (id) => {
     if(value.id == id && value.state == 0){
       var newValue = {
         orderId: value.orderId,
-        id: value.id,
+        accountId: value.accountId,
         date: value.date,
         location: value.location,
         state: stateList[value.state],
         startTime: timeList[value.timeNumber],
         endTime: timeList[value.timeNumber + 1],
-        usePlug: value.usePlug ? '是' : '否',
+        useChargeSocket: value.useChargeSocket ? '是' : '否',
       };
       ordersOfThisStudent.push(newValue);
     }

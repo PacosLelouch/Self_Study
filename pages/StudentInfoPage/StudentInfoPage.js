@@ -11,7 +11,7 @@ Page({
     wHeight: 0,
     title: '个人信息',
     orders: [],
-    id: '',
+    accountId: '',
     inBlackList: true,
   },
 
@@ -80,7 +80,7 @@ Page({
   },
   showStudentInfo: function () {
     studentInfoController.getStudentInfo(this);
-    studentInfoController.getOrdersByStudentId(this, this.data.id);
+    studentInfoController.getOrders(this);
   },
   setStudent: function (student) {
     this.setData(student);
