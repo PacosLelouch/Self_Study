@@ -108,5 +108,5 @@ obj:
 管理员查询预约，参数 地点id，日期，时间，回调函数  
 obj:  
   queryStatus（0:成功，1:输入不合法，-1:未知错误）  
-  orderList（预约列表，每项有预约号order_id, account_id, account_name, useSocket, location_id，timeslot_id，最后两项只是用来debug，不用显示）  
+  orderList（预约列表，每项有预约号order_id, account_id, account_name, state, useSocket, location_id，timeslot_id，最后两项只是用来debug，不用显示）  
   message  

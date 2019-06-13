@@ -2,49 +2,60 @@ const debugFunc = require("../utils/debugFunc.js");
 const serverUrl = require("../utils/serverUrl.js");
 
 const cancelOrder = (orderId, date, startTime, callBack) => {
-  var validCancel = checkTime(date, startTime);
-  if (!validCancel) {
-    callBack({
-      cancelStatus: 2,
-      message: '已过可取消该预约的时间',
-    });
-  } else {
-    if (debugFunc.isDebug == true) {
+  try{
+    var accountType = wx.getStorageSync('type');
+    var validCancel = false;
+    if (accountType == '0') {
+      validCancel = checkTime(date, startTime);
+    } else if (accountType == '1') {
+      validCancel = true;
     }
-    else {
-      var url = serverUrl.cancelOrder.url;
-      wx.request({
-        url: url,
-        data: { order_id: orderId },
-        header: { 'content-type': 'application/json', },
-        method: serverUrl.cancelOrder.method,
-        dataType: 'json',
-        responseType: 'text',
-        success: function (res) {
-          console.log(res);
-          var cancelStatus = 0;
-          if (res.data.status == 'OK') {
-            cancelStatus = 0;
-          } else if (res.data.status == 'UNAUTHORIZED') {
-            cancelStatus = 1;
-          } else {
-            cancelStatus = -1;
-          }
-          callBack({
-            cancelStatus: cancelStatus,
-            message: res.data.message,
-          });
-        },
-        fail: function (res) {
-          console.log(res);
-          callBack({
-            cancelStatus: -1,
-            message: res.data.message,
-          });
-        },
-        complete: function (res) { }
-      })
+    if (!validCancel) {
+      callBack({
+        cancelStatus: 2,
+        message: '已过可取消该预约的时间',
+      });
+    } else {
+      if (debugFunc.isDebug == true) {
+      }
+      else {
+        var url = serverUrl.cancelOrder.url;
+        wx.request({
+          url: url,
+          data: { order_id: orderId },
+          header: { 'content-type': 'application/json', },
+          method: serverUrl.cancelOrder.method,
+          dataType: 'json',
+          responseType: 'text',
+          success: function (res) {
+            console.log(res);
+            var cancelStatus = 0;
+            if (res.data.status == 'OK') {
+              cancelStatus = 0;
+            } else if (res.data.status == 'UNAUTHORIZED') {
+              cancelStatus = 1;
+            } else {
+              cancelStatus = -1;
+            }
+            callBack({
+              cancelStatus: cancelStatus,
+              message: res.data.message,
+            });
+          },
+          fail: function (res) {
+            console.log(res);
+            callBack({
+              cancelStatus: -1,
+              message: res.data.message,
+            });
+          },
+          complete: function (res) { }
+        })
+      }
     }
+  } catch (e) {
+    console.log('Get account type error.');
+    console.log(e.toString());
   }
 }
 
