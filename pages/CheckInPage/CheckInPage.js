@@ -1,4 +1,5 @@
 // pages/CheckInPage/CheckInPage.js
+const CheckInController = require("../../controllers/CheckInAndOutController.js");
 Page({
 
   /**
@@ -74,6 +75,7 @@ Page({
       onlyFromCamera: true,
       success: function (res) {
         console.log(res);
+        CheckInController.checkIn(res.result,that.showResult);
       },
       fail: function (res) {
         that.setData({
@@ -81,5 +83,38 @@ Page({
         });
       }
     });
+  },
+  showResult: function (res) {
+    var that = this;
+    if (res.checkStatus == 0) {
+      wx.showToast({
+        title: '签到成功',
+      })
+      that.showStudentInfo();
+    }
+    else if (res.checkStatus == 1) {
+      wx.showToast({
+        icon: 'none',
+        title: '错误，该预约不存在',
+      })
+    }
+    else if (res.checkStatus == 2) {
+      wx.showToast({
+        icon: 'none',
+        title: '错误，预约状态不可被修改',
+      })
+    }
+    else if (res.checkStatus == 3) {
+      wx.showToast({
+        icon: 'none',
+        title: '错误，非签到时间',
+      })
+    }
+    else if (res.checkStatus == -1) {
+      wx.showToast({
+        icon: 'none',
+        title: '未知错误',
+      })
+    }
   }
 })

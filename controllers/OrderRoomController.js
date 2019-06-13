@@ -18,18 +18,17 @@ const orderRoom = function(date, startTime, locationId, useSocket, callBack){
     if(debugFunc.isDebug){
       
     } else {
-      var url = serverUrl.orderRoom.url;
+      console.log(accountId, locationId, date, startTime, useSocket);
       wx.request({
-        url: url,
+        url: serverUrl.orderRoom.url,
         data: { 
           account_id: accountId, 
           location_id: locationId, 
           date: date, 
-          start_time: startTime, 
-          state: 1,
+          startTime: startTime, 
           useSocket: useSocket
         },
-        header: { 'content-type': 'application/json', },
+        header: { 'content-type': 'application/json' },
         method: serverUrl.orderRoom.method,
         dataType: 'json',
         responseType: 'text',
@@ -58,7 +57,7 @@ const orderRoom = function(date, startTime, locationId, useSocket, callBack){
         },
         fail: function (res) {
           console.log(res);
-          callBack({
+          page.displayResult({
             orderStatus: -1,
             message: res.data.message
           });

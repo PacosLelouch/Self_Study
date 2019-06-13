@@ -1,16 +1,17 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/logs/logs",
+
     "pages/WelcomePage/WelcomePage",
     "pages/RegisterPage/RegisterPage",
     "pages/UsernameLoginPage/UsernameLoginPage",
-    "pages/StudentInfoPage/StudentInfoPage",
     "pages/StudentQueryPage/StudentQueryPage",
-    "pages/CheckInPage/CheckInPage",
-    "pages/CheckOutPage/CheckOutPage",
+    "pages/StudentInfoPage/StudentInfoPage",
     "pages/AdminQueryPage/AdminQueryPage",
-    "pages/BlackListPage/BlackListPage"
+    "pages/BlackListPage/BlackListPage",
+    "pages/CheckOutPage/CheckOutPage",
+    "pages/CheckInPage/CheckInPage",
+    "pages/logs/logs"
+
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -18,5 +19,46 @@
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
   },
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "van-icon": "dist/icon/index",
+    "van-row": "dist/row/index",
+    "van-col": "dist/col/index",
+    "van-button": "dist/button/index",
+    "van-collapse": "dist/collapse/index",
+    "van-collapse-item": "dist/collapse-item/index",
+    "van-tabbar": "dist/tabbar/index",
+    "van-tabbar-item": "dist/tabbar-item/index"
+  },
+  "tabBar": {
+    "color": "#a9b7b7",
+    "selectedColor": "#11cd6e",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/StudentQueryPage/StudentQueryPage",
+        "text": "预约自习室",
+        "selectedIconPath" : "res/Home.png",
+        "iconPath": "res/Home.png"
+      },
+      {
+        "iconPath": "res/Info.png",
+        "selectedIconPath": "res/Info.png",
+        "pagePath": "pages/StudentInfoPage/StudentInfoPage",
+        "text": "个人信息"
+      },
+      {
+        "iconPath": "res/come.png",
+        "selectedIconPath": "res/come.png",
+        "pagePath": "pages/CheckInPage/CheckInPage",
+        "text": "签到"
+      },
+      {
+        "iconPath": "res/go.png",
+        "selectedIconPath": "res/go.png",
+        "pagePath": "pages/CheckOutPage/CheckOutPage",
+        "text": "签退"
+      }
+    ]
+  }
 }

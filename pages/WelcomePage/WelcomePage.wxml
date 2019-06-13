@@ -1,27 +1,39 @@
 <!--pages/WelcomePage/WelcomePage.wxml-->
-<view class="title">
-  <text>{{title}}</text>
-</view>
-<!--view class="testStorage" style="text-align:center;">
-  <text wx:if="{{logined}}">{{logined}} </text>
-  <text wx:if="{{type}}">{{type}} </text>
-  <text wx:if="{{id}}">{{id}} </text>
-</view--> 
-<view class="buttons" wx:if="{{!accountId}}">
-  <button class="btn" hover-class="btn-hover" bindtap="registerPage">{{register.text}}</button>
-  <button class="btn" hover-class="btn-hover" bindtap="loginPage">{{login.text}}</button>
-</view>
-<view class="buttons" wx:if="{{accountId && type == 0}}">
-  <button class="btn" hover-class="btn-hover" bindtap="studentInfoPage">{{studentInfo.text}}</button>
-  <button class="btn" hover-class="btn-hover" bindtap="studentQueryPage">{{studentQuery.text}}</button>
-  <button class="btn" hover-class="btn-hover" bindtap="checkInPage">{{checkIn.text}}</button>
-  <button class="btn" hover-class="btn-hover" bindtap="checkOutPage">{{checkOut.text}}</button>
-</view>
-<view class="buttons" wx:if="{{accountId && type == 1}}">
-  <button class="btn" hover-class="btn-hover" bindtap="adminQueryPage">{{adminQuery.text}}</button>
-  <button class="btn" hover-class="btn-hover" bindtap="blackListPage">{{blackList.text}}</button>
-  <!--admin-->
-</view>
-<view class="buttons" wx:if="{{accountId}}">
-  <button class="btn" hover-class="btn-hover" bindtap="logout">{{logout.text}}</button>
+<view class="container">
+  <view class="subtitle1">
+    <text>{{subtitle}}</text>
+  </view>
+
+  <view class="title1">
+    <text>{{title}}</text>
+  </view>
+
+  <!--view class="testStorage" style="text-align:center;">
+    <text wx:if="{{logined}}">{{logined}} </text>
+    <text wx:if="{{type}}">{{type}} </text>
+    <text wx:if="{{id}}">{{id}} </text>
+  </view--> 
+
+  <view class="showbutton" wx:if="{{!logined}}">
+    <van-button plain type="primary" size="large" bindtap='registerPage'>{{register.text}}</van-button>
+    <van-button plain type="info" size="large" bindtap='loginPage'>{{login.text}}</van-button>
+  </view>
+
+  <view class="showbutton" wx:if="{{logined && type == 0}}">
+    <van-button plain type="primary" size="large" bindtap='studentInfoPage'>{{studentInfo.text}}</van-button>
+    <van-button plain type="info" size="large" bindtap='studentQueryPage'>{{studentQuery.text}}</van-button>
+    <van-button plain type="primary" size="large" bindtap='checkInPage'>{{checkIn.text}}</van-button>
+    <van-button plain type="info" size="large" bindtap='checkOutPage'>{{checkOut.text}}</van-button>
+  </view>
+
+  <view class="showbutton" wx:if="{{logined && type == 1}}">
+    <van-button plain type="primary" size="large" bindtap='adminQueryPage'>{{adminQuery.text}}</van-button>
+    <van-button plain type="info" size="large" bindtap='blackListPage'>{{blackList.text}}</van-button>
+    <!--admin-->
+  </view>
+
+  <view class="showbutton" wx:if="{{logined}}">
+    <van-button plain type="primary" size="large" bindtap='logout'>{{logout.text}}</van-button>
+  </view>
+
 </view>

@@ -1,29 +1,43 @@
 <!--pages/StudentInfoPage/StudentInfoPage.wxml-->
-<view class="title">
-  <text>个人信息</text>
-</view>
-<view class="container" style="height:{{wHeight - 100}}px;">
-  <view class="personal">
-    <text>个人资料\n</text>
-    <text>学号：{{id}}\n</text>
-    <text>是否在黑名单：{{inBlackList}}\n</text>
+<view class="container" style="height:{{wHeight-200}}px;">
+  <view class="personal2" bindtap='logout'>
+    <text>学号：{{name}}\n</text>
+    <text class="hint" wx:if="{{inBlackList}}">您的账号在黑名单中\n</text>
+    <text class="hint" wx:if="{{!inBlackList}}">您的账号不在黑名单中\n</text>
+    <text class="hint">点击本区域退出登录\n</text>
   </view>
-  <view class="orders-outer" style="height:{{wHeight - 250}}px;">
-    <view style="heihgt: 50px;">
-      <text>预约记录\n</text>
-      <text class="hint">点击记录取消预约</text>
+
+  <view class="text2">
+    <text>预约记录\n</text>
+    <text class="hint">点击记录取消预约</text>
+  </view>
+
+  <view class="error__text" wx:if="{{orders.length==0}}">
+    <text>您当前还没有预约\n</text>
+  </view>
+  <!-- <scroll-view class="orders" scroll-y="true" style="height:{{wHeight - 350}}px;">
+    <view wx:for="{{orders}}" wx:key="index" class="one-order" hover-class="one-order-hover" id="{{index}}" bindtap="cancelOrderRecord">
+      <view class="index">{{index + 1}}</view>
+      <text>预约号：{{item.order_id}}\n</text>
+      <text>日期：{{item.date}}\n</text>
+      <text>时间：{{item.startTime}} - {{item.endTime}}\n</text>
+      <text>地点：{{item.name}}\n</text>
+      <text>状态：{{stateName[item.state+1]}}\n</text>
+      <text wx:if="{{item.useSocket}}">是否使用插座：是\n</text>
+      <text wx:if="{{!item.useSocket}}">是否使用插座：否\n</text>
     </view>
-    <scroll-view class="orders" scroll-y="true" style="height:{{wHeight - 300}}px;">
-      <view wx:for="{{orders}}" wx:key="index" class="one-order" hover-class="one-order-hover" id="{{index}}" bindtap="cancelOrderRecord">
-        <view class="index">{{index + 1}}</view>
-        <text>预约号：{{item.orderId}}\n</text>
-        <!--text>{{item.id}}\n</text-->
+  </scroll-view> -->
+  <van-collapse value="{{ activeNames }}" bind:change="onChange" style="height:{{wHeight - 350}}px;" accordion>
+    <van-collapse-item wx:for="{{orders}}" wx:key="index" id="{{index}}" label="{{cutDate[index]}} {{cutTimeS[index]}}-{{cutTimeE[index]}}" title="{{item.name}}" name="{{index+1}}">
+      <view bindtap="cancelOrderRecord" id="{{index}}">
+        <text>预约号：{{item.order_id}}\n</text>
         <text>日期：{{item.date}}\n</text>
-        <text>开始时间：{{item.startTime}}\n</text>
-        <text>结束时间：{{item.endTime}}\n</text>
-        <text>状态：{{item.state}}\n</text>
-        <text>是否使用插座：{{item.usePlug}}\n</text>
+        <text>时间：{{item.startTime}} - {{item.endTime}}\n</text>
+        <text>地点：{{item.name}}\n</text>
+        <text>状态：{{stateName[item.state+1]}}\n</text>
+        <text wx:if="{{item.useSocket}}">是否使用插座：是\n</text>
+        <text wx:if="{{!item.useSocket}}">是否使用插座：否\n</text>
       </view>
-    </scroll-view>
-  </view>
+    </van-collapse-item>
+  </van-collapse>
 </view>

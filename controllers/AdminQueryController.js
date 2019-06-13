@@ -8,7 +8,11 @@ const queryOrder = (locationId, date, startTime, callBack) => {
     var url = serverUrl.queryOrderAdmin.url;
     wx.request({
       url: url,
-      data: {},
+      data: {
+        location_id: locationId,
+        date: date,
+        startTime: startTime
+      },
       header: { 'content-type': 'application/json', },
       method: serverUrl.queryOrderAdmin.method,
       dataType: 'json',

@@ -1,2 +1,65 @@
-<!--pages/AdminQueryPage/AdminQueryPage.wxml-->
-<text>pages/AdminQueryPage/AdminQueryPage.wxml</text>
+<!--pages/StudentQueryPage/AdmintQueryPage.wxml-->
+<view class="container" style="height:{{wHeight - 75}}px;">
+  <view class="input-texts">
+    <picker range="{{dates}}" value="{{select}}" bindchange="inputDate">
+      预约日期：{{dates[select]}}
+    </picker>
+  </view>
+  <view class="input-texts">
+    <picker range="{{column}}" value="{{select}}" bindchange='inputTime'>
+      预约时间：{{column[select1]}}
+    </picker>
+  </view>
+  <view class="margin__block">
+  <view class="input-texts">
+    <picker range="{{locationName}}" value="{{select}}" bindchange='inputLocation'>
+      预约地点：{{locationName[select2]}}
+    </picker>
+  </view>
+  </view>
+
+  <!-- <view class="list__title">
+  <van-row>
+  <van-col span="6">预约号</van-col>
+  <van-col span="6">学号</van-col>
+  <van-col span="6">使用插座</van-col>
+  <van-col span="6">操作</van-col>
+  </van-row>
+  </view> -->
+
+  <view class="error__text" wx:if="{{queryStatus==1 || row.length==0}}">
+  <text>没有符合条件的预约项\n</text>
+  <text>请选择其他日期/时间</text>
+  </view>
+
+  <!-- <view class="list__style" wx:if="{{queryStatus==0 && row.length!=0}}">
+  <block wx:for="{{row}}" wx:key="index" wx:for-item="item">
+      <van-row>
+      <van-col span="6" custom-class="item__style">{{item.order_id}}</van-col>
+      <van-col span="6" custom-class="item__style">{{item.account_name}}</van-col>
+      <van-col span="6" custom-class="item__style">{{item.useSocket}}</van-col>
+      <van-col span="6" custom-class="item__style">
+        <view class="ordertext" bindtap="addToBlackList" id="{{index}}"><text>拉黑</text></view>
+      </van-col>
+      </van-row>
+  </block>
+  </view> -->
+
+  <van-collapse value="{{ activeNames }}" bind:change="onChange1" accordion class="someMargin">
+    <van-collapse-item wx:for="{{row}}" wx:key="index" id="{{index}}" label="{{stateName[item.state+1]}}" title="{{item.account_name}}" name="{{index+1}}">
+      <text>预约号：{{item.order_id}}\n</text>
+      <text>学号：{{item.account_name}}\n</text>
+      <text>状态：{{stateName[item.state+1]}}\n</text>
+      <text wx:if="{{item.useSocket}}">是否使用插座：是\n</text>
+      <text wx:if="{{!item.useSocket}}">是否使用插座：否\n</text>
+      <view class="ordertext" bindtap="cancelOrder" id="{{index}}"><text>取消该预约</text></view>
+      <view class="ordertext" bindtap="addToBlackList" id="{{index}}"><text>拉黑该用户</text></view>
+    </van-collapse-item>
+  </van-collapse>
+
+
+  <van-tabbar active="{{ active }}" bind:change="onChange" fixed="true">
+    <van-tabbar-item icon="home-o">查询预约</van-tabbar-item>
+    <van-tabbar-item icon="search">管理黑名单</van-tabbar-item>
+  </van-tabbar>
+</view>

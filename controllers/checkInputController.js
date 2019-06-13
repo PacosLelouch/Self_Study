@@ -1,5 +1,5 @@
-const checkNameValidity = name => { //学号必须合法，即8位数字。
-  var str = name;
+const checkNameValidity = id => { //学号必须合法，即8位数字。
+  var str = id;
   if (str == null || str.length != 8) {
     return false;
   }

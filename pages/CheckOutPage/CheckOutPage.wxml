@@ -1,2 +1,5 @@
 <!--pages/CheckOutPage/CheckOutPage.wxml-->
-<text>pages/CheckOutPage/CheckOutPage.wxml</text>
+<view class="showbutton">
+  <van-button plain type="primary" size="large" bindtap="scanCode">{{scanCode.text}}</van-button>
+</view>
+<view class="errMsg" wx:if="{{!scanCodeValidity}}">{{scanCode.notValidMsg}}</view>

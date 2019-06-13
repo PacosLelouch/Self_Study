@@ -12,9 +12,8 @@ const queryRoom = (callBack) => {
     });
   }
   else{
-    var url = serverUrl.queryRoom.url
     wx.request({
-      url: url,
+      url: serverUrl.queryRoom.url,
       data: { },
       header: { 'content-type': 'application/json', },
       method: serverUrl.queryRoom.method,
@@ -68,7 +67,7 @@ const queryOrder = (date, startTime, callBack) =>{
       dataType: 'json',
       responseType: 'text',
       success: function (res) {
-        console.log(res);
+        //console.log(res.data.data);
         var queryOrderStatus = 0;
         if (res.data.status == null) {//null是OK
           queryOrderStatus = 0;

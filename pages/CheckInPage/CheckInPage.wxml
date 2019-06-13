@@ -1,5 +1,5 @@
 <!--pages/CheckInPage/CheckInPage.wxml-->
-<view class="buttons">
-  <button class="btn" hover-class="btn-hover" bindtap="scanCode">{{scanCode.text}}</button>
+<view class="showbutton">
+  <van-button plain type="primary" size="large" bindtap="scanCode">{{scanCode.text}}</van-button>
 </view>
 <view class="errMsg" wx:if="{{!scanCodeValidity}}">{{scanCode.notValidMsg}}</view>

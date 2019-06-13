@@ -1,30 +1,35 @@
 /* pages/StudentInfoPage/StudentInfoPage.wxss */
-.title{ /*标题*/
-  text-align: center;
-  font-size: 1.4em;
-  font-style: italic;
-}
 .container{
-  margin: 20px;
   padding: 0px;
-  height: 440px;
+}
+.error__text{
+  color:red;
+  padding: 15px;
+  text-align: center;
+  font-size: 13px;
 }
 .personal{
-  width: 90%;
-  height: 120px;
+  width: 80%;
+  height: 50px;
   margin: 10px;
   padding: 20px;
   border-radius: 10px;
-  background-color: aquamarine;
+  background-color: rgb(174, 255, 228);
   text-align: center; 
 }
 .orders-outer{
-  width: 90%;
-  height: 72%;
+  width: 80%;
+  height: 50%;
   margin: 10px;
   padding: 20px;
   border-radius: 10px;
   background-color: aliceblue;
+  text-align: center; 
+}
+.personal2{
+  height: 50px;
+  padding: 30px;
+  background-color: rgb(240, 240, 240);
   text-align: center; 
 }
 .orders{
@@ -53,12 +58,23 @@
   border-radius: 10px;
   border: 1px solid aqua;
   text-align: center; 
-  background: aliceblue;
+  background:white;
+  font-size: 13px;
   overflow: hidden;
 }
 .one-order-hover{
   background: #f7ffff;
 }
+.text2{
+  text-align: center; 
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
 .hint{ /*提示信息*/
   color:gray;
+  font-size: 12px;
+}
+.buttonshow{
+  margin-left: 10px;
+  margin-right: 10px;
 }

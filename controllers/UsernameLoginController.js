@@ -56,15 +56,15 @@ function studentLogin(name, password, callBack){
         } else{
           loginStatus = -1;
         }
-        if (loginStatus == 0) {
-          var loginSucceed = storageLogin(0, res.data.data, name);
-          console.log('loginSucceed = ' + loginSucceed.toString());
-        }
         callBack({
           nameNotValid: false,
           passwordNotValid: false,
           loginStatus: loginStatus,
         });
+        if (loginStatus == 0) {
+          var loginSucceed = storageLogin(0, res.data.data, name);
+          console.log('loginSucceed = ' + loginSucceed.toString());
+        }
       },
       fail: function (res) { 
         callBack({
@@ -110,6 +110,7 @@ function adminLogin(name, password, callBack){
         } else{
           loginStatus = -1;
         }
+
         if (loginStatus == 0) {
           var loginSucceed = storageLogin(1, res.data.data, name);
           console.log('loginSucceed = ' + loginSucceed.toString());

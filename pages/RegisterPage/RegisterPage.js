@@ -7,6 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    title: "自习室预约系统",
+    subtitle: "中山大学",
     loginPage: "../UsernameLoginPage/UsernameLoginPage",
     idNotValid: false,
     idStatus: 0,
@@ -19,17 +21,17 @@ Page({
       text: '注册',
     },
     inputId: {
-      text: '输入学号（只能为8位数字）',
+      text: '请输入8位学号',
       notValidMsg: '学号不合法，只能为8位数字！',
       notNewMsg: '学号已存在！',
       notSucceedMsg: '未知错误！请检查网络情况！',
     },
     inputPassword: {
-      text: '输入密码（>=6，字母数字）',
-      notValidMsg: '密码不合法，要求不少于6位字符，必须只包含字母数字！',
+      text: '请输入密码',
+      notValidMsg: '密码不合法，要求不少于6位字符，必须同时包含字母数字！',
     },
     inputConfirmPassword: {
-      text: '再次输入密码',
+      text: '请再次输入密码',
       notConsistentMsg: '密码不一致！',
     },
   },
@@ -109,16 +111,57 @@ Page({
     var id = this.data.id;
     var password = this.data.password;
     var confirmPassword = this.data.confirmPassword;
-    //console.log(id + ',' + password + ',' + confirmPassword);
-    registerController.createStudent(this, id, password, confirmPassword);
+    console.log(id + ',' + password + ',' + confirmPassword);
+    registerController.createStudent(id, password, confirmPassword, this.displayResult);
   },
   displayResult: function(returnData){
+    console.log(returnData);
     this.setData(returnData);
-    for (var d in returnData) {
-      if (returnData[d]) {
-        return;
-      }
+    if(returnData.nameNotValid){
+      wx.showModal({
+        title: '错误',
+        content: this.data.inputId.notValidMsg,
+        showCancel: 'false'
+      })
+      return
     }
+    if (returnData.nameStatus == 1){
+      wx.showModal({
+        title: '错误',
+        content: this.data.inputId.notNewMsg,
+        showCancel: 'false'
+      })
+      return
+    }
+    if (returnData.nameStatus == -1) {
+      wx.showModal({
+        title: '错误',
+        content: this.data.inputId.notSucceedMsg,
+        showCancel: 'false'
+      })
+      return
+    }
+    if (returnData.passwordNotValid) {
+      wx.showModal({
+        title: '错误',
+        content: this.data.inputPassword.notValidMsg,
+        showCancel: 'false'
+      })
+      return
+    }
+    if (returnData.passwordNotConsistent) {
+      wx.showModal({
+        title: '错误',
+        content: this.data.inputConfirmPassword.notConsistentMsg,
+        showCancel: 'false'
+      })
+      return
+    }
+    // for (var d in returnData) {
+    //   if (returnData[d]) {
+    //     return;
+    //   }
+    // }
     //注册成功
     showSuccess(this);
   }

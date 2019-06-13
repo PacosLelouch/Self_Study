@@ -4,7 +4,7 @@ const debugFunc = require("../utils/debugFunc.js");
 const getStudentInfo = (callBack) => {
   try{
     var accountId = wx.getStorageSync('accountId');
-    returnData.accountId = accountId;
+    console.log(accountId+"here");
     if(debugFunc.isDebug == true){
       var returnData = debugFunc.getStudentByIdDebug(accountId);
       callBack({

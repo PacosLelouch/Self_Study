@@ -1,1 +1,47 @@
 /* pages/AdminQueryPage/AdminQueryPage.wxss */
+/* pages/StudentQueryPage/StudentQueryPage.wxss */
+Page{
+  background-color: snow;
+}
+picker{
+  background-color:white;
+  padding: 13px;
+}
+.input-texts{
+  margin-top: 15px;
+}
+.container{
+  height: 480px;
+  padding: 0;
+}
+.list__title{
+  background-color:rgb(235, 235, 235);
+  margin-top: 30px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 45px;
+  height:45px;
+}
+.list__style{
+  background-color:white;
+  text-align: center;
+  font-size: 15px;
+}
+.item__style{
+  padding: 8px;
+  border-bottom:1px solid #eee;
+}
+.margin__block{
+  margin-bottom: 15px;
+}
+.ordertext{
+  font-size: 13px;
+  color:blue;
+  text-decoration: underline;
+}
+.error__text{
+  color:red;
+  padding: 15px;
+  text-align: center;
+  font-size: 13px;
+}

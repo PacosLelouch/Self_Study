@@ -24,22 +24,22 @@ var roomsDebug = [{
   roomId: 1,
   roomName: '图书馆',
   capacity: 400,
-  chargeSocketCapacity: 20,
+  socketCapacity: 20,
 }, {
   romId: 2,
   roomName: '公教楼D102',
   capacity: 150,
-  chargeSocketCapacity: 3,
+  socketCapacity: 3,
 }, {
   roomId: 3,
   roomName: '公教楼D103',
   capacity: 150,
-  chargeSocketCapacity: 3,
+  socketCapacity: 3,
 }, {
   roomId: 4,
   roomName: '公教楼D104',
   capacity: 150,
-  chargeSocketCapacity: 3,
+  socketCapacity: 3,
 }];
 
 var orderRecordsDebug = [{
@@ -49,7 +49,7 @@ var orderRecordsDebug = [{
   roomId: 3,
   timeNumber: 6,
   state: 0,
-  useChargeSocket: false,
+  useSocket: false,
 }, {
   orderId: '1234',
   id: '12345678',
@@ -57,7 +57,7 @@ var orderRecordsDebug = [{
   roomId: 2,
   timeNumber: 0,
   state: 0,
-  useChargeSocket: true,
+  useSocket: true,
 }, {
   orderId: '1235',
   id: '12345678',
@@ -65,7 +65,7 @@ var orderRecordsDebug = [{
   roomId: 2,
   timeNumber: 1,
   state: 0,
-  useChargeSocket: false,
+  useSocket: false,
 }, {
   orderId: '12450',
   id: '12345678',
@@ -73,7 +73,7 @@ var orderRecordsDebug = [{
   location: '图书馆',
   timeNumber: 6,
   state: 0,
-  useChargeSocket: true,
+  useSocket: true,
 }, {
   orderId: '1236',
   id: '12344321',
@@ -81,7 +81,7 @@ var orderRecordsDebug = [{
   location: '公教楼D102',
   timeNumber: 3,
   state: 0,
-  useChargeSocket: false,
+  useSocket: false,
 }, {
   orderId: '12444',
   id: '12344321',
@@ -89,7 +89,7 @@ var orderRecordsDebug = [{
   location: '公教楼D103',
   timeNumber: 5,
   state: 0,
-  useChargeSocket: true,
+  useSocket: true,
 }, {
   orderId: '12445',
   id: '12344321',
@@ -97,7 +97,7 @@ var orderRecordsDebug = [{
   location: '公教楼D104',
   timeNumber: 6,
   state: 1,
-  useChargeSocket: true,
+  useSocket: true,
 }];
 
 var orderRoomsDebug = getOrderRooms(roomsDebug, orderRecordsDebug);
@@ -128,7 +128,7 @@ function getOrderRooms(rooms, orderRecords){
           date: getDateAfterNDays(i),
           timeNumber: k,
           numberOfOrder: 0,
-          numberOfOrderedChargeSocket: 0,
+          numberOfOrderedSocket: 0,
         }
         orderRoom.numberOfOrder = orderRecords.filter((value, index, array) => {
           return value.location == orderRoom.roomName &&
@@ -136,12 +136,12 @@ function getOrderRooms(rooms, orderRecords){
             value.timeNumber == orderRoom.timeNumber &&
             (value.state == 0 || value.state == 1);
         }).length;
-        orderRoom.numberOfOrderedChargeSocket = orderRecords.filter((value, index, array) => {
+        orderRoom.numberOfOrderedSocket = orderRecords.filter((value, index, array) => {
           return value.location == orderRoom.roomName &&
             value.date == orderRoom.date &&
             value.timeNumber == orderRoom.timeNumber &&
             (value.state == 0 || value.state == 1) &&
-            value.useChargeSocket == true;
+            value.useSocket == true;
         }).length;
         ans[ans.length - 1]/*[ans[ans.length - 1].length - 1]*/.push(orderRoom);
       }
@@ -224,7 +224,7 @@ const getOrdersByStudentIdDebug = (id) => {
         state: stateList[value.state],
         startTime: timeList[value.timeNumber],
         endTime: timeList[value.timeNumber + 1],
-        useChargeSocket: value.useChargeSocket ? '是' : '否',
+        useSocket: value.useSocket ? '是' : '否',
       };
       ordersOfThisStudent.push(newValue);
     }

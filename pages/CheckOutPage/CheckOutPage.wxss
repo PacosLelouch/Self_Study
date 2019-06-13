@@ -1,1 +1,12 @@
 /* pages/CheckOutPage/CheckOutPage.wxss */
+.hint{ /*提示信息*/
+  color:gray;
+  text-indent: 20px;
+}
+.errMsg{ /*失败信息*/
+  color: red;
+  text-indent: 20px;
+}
+.showbutton{
+  margin: 20px;
+}

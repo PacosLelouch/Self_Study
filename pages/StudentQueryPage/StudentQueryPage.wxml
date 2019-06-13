@@ -1,73 +1,40 @@
 <!--pages/StudentQueryPage/StudentQueryPage.wxml-->
-<view class="title">
-  <text>预约情况</text>
-</view>
 <view class="container" style="height:{{wHeight - 75}}px;">
   <view class="input-texts">
     <picker range="{{dates}}" value="{{select}}" bindchange="inputDate">
-      <text>选择预约日期：</text>
-      <span class="select">{{dates[select]}}</span>
+      预约日期：{{dates[select]}}
     </picker>
   </view>
-  <view class="orders-outer" style="height:{{wHeight - 180}}px;">
-    <view class="orders-title">
-      <text>当日预约情况\n</text>
-      <text class="hint">点击方块进行预约</text>
-    </view>
-    <!--scroll-view class="quotation-wrapper" style="height:{{wHeight - 250}}px;" scroll-y="true" bindscroll="scroll" bindscrolltoupper="scrolltoupper" bindscrolltolower="scrolltolower"-->
+  <view class="input-texts">
+    <picker range="{{column}}" value="{{select}}" bindchange='inputTime'>
+      预约时间：{{column[select1]}}
+    </picker>
+  </view>
 
-      <!-- 蓝色部分-固定 -->
-      <!--view class="left-wrapper">
-        <view class="left-th" style="{{leftThStyle}}">情况</view>
-        <view class="left-item" wx:for="{{row}}" wx:key="{{index}}">
-          <text>{{item.roomName}}\n</text>
-          <text>容量：{{item.capacity}}\n</text>
-          <text>插座数{{item.plugCapacity}}\n</text>
-        </view>
-      </view-->
+  <view class="list__title">
+  <van-row>
+  <van-col span="8">自习室</van-col>
+  <van-col span="6">容量</van-col>
+  <van-col span="6">插座数</van-col>
+  <van-col span="4">操作</van-col>
+  </van-row>
+  </view>
 
-      <!-- 粉色部分，可左右滑动的 scroll-view -->
-      <!--scroll-view class="right-wrapper" scroll-x="true">
-        <view class="right-th" style="{{thStyle}}">
-          <view wx:for="{{column}}" wx:key="{{index}}" class="right-td">
-            <text>{{item}}</text>
-          </view>
-        </view>
-        <block wx:for="{{text}}" wx:key="{{item.rank}}">
-          <view class="right-item">
-            <view class="right-item-prop">{{filter.format8(item.marketCapType)}}</view>
-            <view class="right-item-prop">{{filter.formatUndefined(item.priceType)}}</view>
-            <view class="right-item-prop">{{filter.format4(item.availableSupply)}}</view>
-            <view class="right-item-prop">{{filter.format4(item.data24hVolumeType)}}</view>
+  <view class="error__text" wx:if="{{orderStatus==2}}">
+  <text>没有符合条件的自习室\n</text>
+  <text>请选择其他日期/时间</text>
+  </view>
 
-            <view class="right-item-prop" style="color:red;">{{item.percentChange24h}}</view>
-          </view>
-        </block>
-      </scroll-view>
-    </scroll-view-->
-
-    <scroll-view class="orders" style="height:{{wHeight-280}}px;" scroll-y="true" scroll-x="true">
-      <view class="table">
-        <block style="display: table-header-group;">
-          <view class="tr">
-            <view class="th-first">预约情况</view>
-            <view wx:for="{{column}}" wx:key="index" class="th">{{item}}</view>
-          </view>
-        </block>
-        <block style="display: table-row-group;" wx:for="{{row}}" wx:key="index" wx:for-item="room">
-          <view class="tr">
-            <view class="td-first">
-              <text>{{room.roomName}}\n</text>
-              <text>容量：{{room.capacity}}\n</text>
-              <text>插座数：{{room.plugCapacity}}\n</text>
-            </view>
-            <view class="td" wx:if="{{room.roomName == item.roomName}}" wx:for="{{grid}}" wx:key="index" bindtap="order" hover-class="td-hover" id="{{index}}">
-                <text>已申请：{{item.numberOfOrder}}\n</text>
-                <text>已申插座：{{item.numberOfOrderedPlug}}\n</text>
-            </view>
-          </view>
-        </block>
-      </view>
-    </scroll-view>
+  <view class="list__style" wx:if="{{orderStatus==0}}">
+  <block wx:for="{{grid}}" wx:key="index" wx:for-item="room">
+      <van-row>
+      <van-col span="8" custom-class="item__style">{{room.location_name}}</van-col>
+      <van-col span="6" custom-class="item__style">{{room.order_capacity-room.order_count}}/{{room.order_capacity}}</van-col>
+      <van-col span="6" custom-class="item__style">{{room.socket_capacity-room.socket_count}}/{{room.socket_capacity}}</van-col>
+      <van-col span="4" custom-class="item__style">
+        <view class="ordertext" bindtap="askIfNeedSocket" id="{{index}}"><text>预约</text></view>
+      </van-col>
+      </van-row>
+  </block>
   </view>
 </view>

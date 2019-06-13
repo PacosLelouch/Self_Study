@@ -38,7 +38,7 @@ module.exports = {
   },
   queryOrderAdmin: {
     url: serverBaseUrl + "order/listAll/",
-    method: 'GET',
+    method: 'POST',
   },
   queryBlackList: {
     url: serverBaseUrl + "blacklist/listAll/",
@@ -54,10 +54,6 @@ module.exports = {
   },
   checkInAndOut: {
     url: serverBaseUrl + "order/changeState/",
-    method: 'POST',
-  },
-  orderState: {
-    url: serverBaseUrl + "order/changeState",
     method: 'POST',
   }
 }
