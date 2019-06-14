@@ -150,7 +150,7 @@ function checkOutAux(orderId, message, callBack){
         responseType: 'text',
         success: function (res) {
           console.log(res);
-          var checkOutStatus = 0;
+          var checkStatus = 0;
           if (res.data.status == 'OK') {
             checkStatus = 0;
             message = '签退成功';
