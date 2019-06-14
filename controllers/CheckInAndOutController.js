@@ -197,7 +197,7 @@ function findOrderId(accountId, locationId, dateString, startTime, message, targ
       startTime: startTime,
     },
     header: { 'content-type': 'application/json', },
-    method: serverUrl.checkInAndOut.method,
+    method: serverUrl.orderState.method,
     dataType: 'json',
     responseType: 'text',
     success: function (res) {

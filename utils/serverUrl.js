@@ -55,5 +55,9 @@ module.exports = {
   checkInAndOut: {
     url: serverBaseUrl + "order/changeState/",
     method: 'POST',
+  },
+  orderState:{
+    url: serverBaseUrl + "order/getState/",
+    method: 'POST',
   }
 }

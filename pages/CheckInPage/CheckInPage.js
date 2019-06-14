@@ -90,7 +90,6 @@ Page({
       wx.showToast({
         title: '签到成功',
       })
-      that.showStudentInfo();
     }
     else if (res.checkStatus == 1) {
       wx.showToast({

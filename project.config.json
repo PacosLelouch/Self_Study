@@ -10,12 +10,13 @@
 		"minified": true,
 		"newFeature": true,
 		"autoAudits": false,
-		"checkInvalidKey": true
+		"checkInvalidKey": true,
+		"uglifyFileName": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.6.6",
+	"libVersion": "2.7.1",
 	"appid": "wxe95577ce85a57435",
-	"projectname": "Self-Study%20Room%20Demo%20Back-end%20Django",
+	"projectname": "Self-Study%20Room%20Demo%20Back-end%20Spring",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
