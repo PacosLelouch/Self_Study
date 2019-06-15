@@ -90,7 +90,7 @@ Page({
       wx.showToast({
         title: '签退成功',
       })
-      that.showStudentInfo();
+      //that.showStudentInfo();
     }
     else if (res.checkStatus == 1) {
       wx.showToast({
